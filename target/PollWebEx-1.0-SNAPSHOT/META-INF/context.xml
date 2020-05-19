@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true"  path="/PollWeb">
+
+    <!-- Copiare il driver nella directory CATALINA_HOME/lib --> 
+    <!-- Se lo si mette in WEB-INF/lib non sarà visibile al common class loader usato per il pooling --> 
+    <!-- in tal caso non si potrà usare il pooler di Tomcat, ma uno esterno da aggiungere all'applicazione --> 
+    <Resource 
+        name="jdbc/pollwebdb"  
+        type="javax.sql.DataSource" 
+        auth="Container" 
+        driverClassName="com.mysql.cj.jdbc.Driver" 
+        url="jdbc:mysql://localhost:3306/pollwebdb?zeroDateTimeBehavior=CONVERT_TO_NULL" 
+        username="pollweb" 
+        password="pollweb" 
+        maxActive="100" 
+        maxIdle="50" 
+        maxWait="10000" 
+    />
+    
+</Context>

@@ -1,0 +1,51 @@
+.bd-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24%;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content:target {
+  display: block;
+}
+
+.tab-folder > .tab-content:target ~ .tab-content:last-child, .tab-folder > .tab-content {
+  display: none;
+}
+.tab-folder > :last-child, .tab-folder > .tab-content:target {
+  display: block;
+}
+
+.tab-button {
+  color: black;
+  border-radius: .25rem;
+}
+
+.tasto-accedi {
+  color: white;
+}
+
+.header-errore {
+  color: red;
+}
+
+.header-successo {
+  color: green;
+}
+
+.tab-admin {
+  display:none;
+}
+
+.tab-selected {
+  background-color: #E0E0E0;
+}
+
+.tab-name {
+  cursor: pointer;
+}

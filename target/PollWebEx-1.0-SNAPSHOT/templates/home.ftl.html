@@ -1,0 +1,13 @@
+          
+<#if (surveys?size>0)>
+            <#list surveys as survey>
+                <a href="Sondaggio.html">
+                    <div class="row">
+                        <button class="btn btn-light sondaggio col-md-12">
+                            ${survey.title}
+                        </button>
+                    </div>
+                </a>
+            </#list>
+        </#if>
+    
