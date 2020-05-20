@@ -129,23 +129,7 @@ public class Autentication extends BaseController {
         response.sendRedirect("/homepage");
     }
        
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
-        try {
-            HttpSession s = SecurityLayer.checkSession(request);
-            if (s != null){
-                System.out.println("loggato");
-            }else{
-                System.out.println("non loggato");
-            }
-            TemplateResult res = new TemplateResult(getServletContext());
-            request.setAttribute("split_shalshes",new SplitSlashesFmkExt());
-            request.setAttribute("page_title", "login");
-            res.activate("login.ftl.html", request, response);
-            
-        } catch (TemplateManagerException ex) {
-        ex.printStackTrace();
-        }
-    } 
+  
 
 
     @Override
@@ -162,8 +146,6 @@ public class Autentication extends BaseController {
                 action_login_sup(request, response);
             }else if(request.getParameter("logout") != null){
                 action_logout(request, response);
-            }else{
-                action_default(request, response);
             }
         } catch (IOException ex) {
             System.out.println(ex);

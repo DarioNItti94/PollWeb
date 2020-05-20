@@ -14,7 +14,7 @@
         <param-name>view.template_directory</param-name>
         <param-value>templates</param-value>
     </context-param>
-     <context-param>
+    <context-param>
         <param-name>view.outline_template</param-name>
         <param-value>outline.ftl.html</param-value>
     </context-param>
@@ -36,19 +36,20 @@
     </servlet>
     <servlet>
         <servlet-name>homepage</servlet-name>
-        <servlet-class>iw.pollweb.controller.homepage</servlet-class>
+        <servlet-class>iw.pollweb.controller.Page.homepage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Autentication</servlet-name>
-        <servlet-class>iw.pollweb.controller.Autentication</servlet-class>
+        <servlet-name>loginpage</servlet-name>
+        <servlet-class>iw.pollweb.controller.Page.loginpage</servlet-class>
     </servlet>
     <!--- servlet mapping and url pattern-->
+    
     <servlet-mapping>
         <servlet-name>homepage</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Autentication</servlet-name>
+        <servlet-name>loginpage</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <session-config>

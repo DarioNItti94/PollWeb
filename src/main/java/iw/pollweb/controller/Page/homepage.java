@@ -1,9 +1,10 @@
-package iw.pollweb.controller;
+package iw.pollweb.controller.Page;
 
 import iw.framework.data.DataException;
 import iw.framework.result.SplitSlashesFmkExt;
 import iw.framework.result.TemplateManagerException;
 import iw.framework.result.TemplateResult;
+import iw.pollweb.controller.BaseController;
 import iw.pollweb.model.PollWebDataLayer;
 import iw.pollweb.model.dto.Survey;
 import java.util.ArrayList;
