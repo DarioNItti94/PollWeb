@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dao;
 
-import  iw.framework.data.DataException;
-import  iw.pollweb.model.dto.Participant;
-import  iw.pollweb.model.dto.Question;
-import  iw.pollweb.model.dto.Response;
-import  iw.pollweb.model.dto.Submission;
+import iw.framework.data.DataException;
+import iw.pollweb.model.dto.Participant;
+import iw.pollweb.model.dto.Question;
+import iw.pollweb.model.dto.Response;
+import iw.pollweb.model.dto.Submission;
 
 import java.sql.ResultSet;
 import java.util.List;
@@ -21,21 +16,15 @@ import java.util.List;
 
 public interface ResponseDAO {
 
-  // utility
+  // Utility
   Response createResponse ();
-
   Response createResponseFromRS (ResultSet rs) throws DataException;
 
   // CRUD
   void storeResponse (Response response) throws DataException;
-
   Response getResponseByID (int id) throws DataException;
-
   List<Response> getResponsesByParticipant (Participant participant) throws DataException;
-
   List<Response> getResponsesBySubmission (Submission submission) throws DataException;
-
   List<Response> getResponsesByQuestion (Question question) throws DataException;
-
   void deleteResponse (int id) throws DataException;
 }

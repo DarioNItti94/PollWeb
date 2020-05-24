@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
-
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.ChoiceDAO;
-import  iw.pollweb.model.dao.ResponseDAO;
-import  iw.pollweb.model.dao.SurveyDAO;
-import  iw.pollweb.model.dto.Choice;
-import  iw.pollweb.model.dto.Question;
-import  iw.pollweb.model.dto.Response;
-import  iw.pollweb.model.dto.Survey;
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.ChoiceDAO;
+import iw.pollweb.model.dao.ResponseDAO;
+import iw.pollweb.model.dao.SurveyDAO;
+import iw.pollweb.model.dto.Choice;
+import iw.pollweb.model.dto.Question;
+import iw.pollweb.model.dto.Response;
+import iw.pollweb.model.dto.Survey;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -32,7 +26,7 @@ public class QuestionProxy extends Question {
 
   public QuestionProxy (DataLayer dataLayer) {
     super();
-    //dependency injection
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
     this.surveyID = 0;
@@ -148,7 +142,7 @@ public class QuestionProxy extends Question {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }
@@ -159,7 +153,7 @@ public class QuestionProxy extends Question {
 
   public void setSurveyID (int surveyID) {
     this.surveyID = surveyID;
-    //resetto la cache dell'oggetto Survey
+    // Resetto la cache dell'oggetto Survey
     super.setSurvey(null);
   }
 }

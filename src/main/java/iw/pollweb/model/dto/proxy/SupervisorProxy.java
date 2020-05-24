@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
-
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.SurveyDAO;
-import  iw.pollweb.model.dto.Supervisor;
-import  iw.pollweb.model.dto.Survey;
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.SurveyDAO;
+import iw.pollweb.model.dto.Supervisor;
+import iw.pollweb.model.dto.Survey;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -27,7 +21,7 @@ public class SupervisorProxy extends Supervisor {
 
   public SupervisorProxy (DataLayer dataLayer) {
     super();
-    //dependency injection
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
   }
@@ -87,7 +81,7 @@ public class SupervisorProxy extends Supervisor {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }

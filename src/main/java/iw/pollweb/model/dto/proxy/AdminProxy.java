@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
 import iw.framework.data.DataLayer;
@@ -19,7 +14,7 @@ public class AdminProxy extends Admin {
 
   public AdminProxy (DataLayer dataLayer) {
     super();
-    //dependency injection
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
   }
@@ -42,7 +37,7 @@ public class AdminProxy extends Admin {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }

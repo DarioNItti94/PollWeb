@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.QuestionDAO;
-import  iw.pollweb.model.dto.Choice;
-import  iw.pollweb.model.dto.Question;
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.QuestionDAO;
+import iw.pollweb.model.dto.Choice;
+import iw.pollweb.model.dto.Question;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +21,7 @@ public class ChoiceProxy extends Choice {
 
   public ChoiceProxy (DataLayer dataLayer) {
     super();
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
     this.questionID = 0;
@@ -74,7 +70,7 @@ public class ChoiceProxy extends Choice {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }
@@ -85,7 +81,7 @@ public class ChoiceProxy extends Choice {
 
   public void setQuestionID (int questionID) {
     this.questionID = questionID;
-    //resetto la cache dell'oggetto Survey
+    // Resetto la cache dell'oggetto Survey
     super.setQuestion(null);
   }
 }

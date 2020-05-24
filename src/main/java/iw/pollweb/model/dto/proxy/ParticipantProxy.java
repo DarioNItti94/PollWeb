@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.ResponseDAO;
-import  iw.pollweb.model.dao.SubmissionDAO;
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.ResponseDAO;
+import iw.pollweb.model.dao.SubmissionDAO;
 import iw.pollweb.model.dao.SurveyDAO;
 import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Response;
@@ -32,7 +27,7 @@ public class ParticipantProxy extends Participant {
 
   public ParticipantProxy (DataLayer dataLayer) {
     super();
-    //dependency injection
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
     this.surveyID = 0;
@@ -150,7 +145,7 @@ public class ParticipantProxy extends Participant {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }
@@ -161,13 +156,13 @@ public class ParticipantProxy extends Participant {
 
   public void setSurveyID (int surveyID) {
     this.surveyID = surveyID;
-    //resetto la cache dell'oggetto Survey
+    // Resetto la cache dell'oggetto Survey
     super.setSurvey(null);
   }
 
   public void setSubmissionID (int submissionID) {
     this.submissionID = submissionID;
-    //resetto la cache dell'oggetto Submission
+    // Resetto la cache dell'oggetto Submission
     super.setSubmission(null);
   }
 }

@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model;
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.*;
-import  iw.pollweb.model.dao.mariadb.*;
-import  iw.pollweb.model.dto.*;
+
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.*;
+import iw.pollweb.model.dao.mysql.*;
+import iw.pollweb.model.dto.*;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -26,18 +22,18 @@ public class PollWebDataLayer extends DataLayer {
 
   @Override
   public void init () throws DataException {
-    // registro i DAO
-    registerDAO(Admin.class, new AdminDAO_MariaDB(this));
-    registerDAO(Choice.class, new ChoiceDAO_MariaDB(this));
-    registerDAO(Participant.class, new ParticipantDAO_MariaDB(this));
-    registerDAO(Question.class, new QuestionDAO_MariaDB(this));
-    registerDAO(Response.class, new ResponseDAO_MariaDB(this));
-    registerDAO(Submission.class, new SubmissionDAO_MariaDB(this));
-    registerDAO(Supervisor.class, new SupervisorDAO_MariaDB(this));
-    registerDAO(Survey.class, new SurveyDAO_MariaDB(this));
+    // Registro i DAO
+    registerDAO(Admin.class, new AdminDAO_MySQL(this));
+    registerDAO(Choice.class, new ChoiceDAO_MySQL(this));
+    registerDAO(Participant.class, new ParticipantDAO_MySQL(this));
+    registerDAO(Question.class, new QuestionDAO_MySQL(this));
+    registerDAO(Response.class, new ResponseDAO_MySQL(this));
+    registerDAO(Submission.class, new SubmissionDAO_MySQL(this));
+    registerDAO(Supervisor.class, new SupervisorDAO_MySQL(this));
+    registerDAO(Survey.class, new SurveyDAO_MySQL(this));
   }
 
-  // helpers
+  // Helpers
   public AdminDAO getAdminDAO () {
     return (AdminDAO) getDAO(Admin.class);
   }

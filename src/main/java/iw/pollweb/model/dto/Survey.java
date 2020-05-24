@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto;
 
 import java.util.List;
@@ -25,10 +20,8 @@ public class Survey {
   private List<Participant> participants;
   private List<Submission> submissions;
 
-  // costruttori
-  public Survey () {
-  }
-
+  // Costruttori
+  public Survey () {}
   public Survey (int id, String title, String openingText, String closingText, boolean isReserved, boolean isActive, boolean isClosed, Supervisor supervisor, List<Question> questions, List<Participant> participants, List<Submission> submissions) {
     this.id = id;
     this.title = title;
@@ -43,7 +36,7 @@ public class Survey {
     this.submissions = submissions;
   }
 
-  // getter e setter
+  // Getter & Setter
   public int getID () {
     return id;
   }

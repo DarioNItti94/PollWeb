@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto;
 
 /**
@@ -15,17 +10,15 @@ public class Admin {
   private String email;
   private String hashedPassword;
 
-  // costruttori
-  public Admin () {
-  }
-
+  // Costruttori
+  public Admin () {}
   public Admin (int id, String email, String hashedPassword) {
     this.id = id;
     this.email = email;
     this.hashedPassword = hashedPassword;
   }
 
-  // getter e setter
+  // Getter & Setter
   public int getID () {
     return id;
   }

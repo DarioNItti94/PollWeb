@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.framework.utils;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +18,7 @@ public class PasswordUtility {
   private static final String DIGIT = "0123456789";
   private static final String SPECIAL_CHAR = "!@#$%&*()_+-=[]?";
   private static final String PASSWORD_BASE_STRING = CHAR_LOWER + CHAR_UPPER + DIGIT + SPECIAL_CHAR;
-  private static SecureRandom random = new SecureRandom();
+  private static final SecureRandom random = new SecureRandom();
 
   /**
    * Metodo che genera una password casuale di 10 caratteri

@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
-
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.ParticipantDAO;
-import  iw.pollweb.model.dao.QuestionDAO;
-import  iw.pollweb.model.dao.SubmissionDAO;
-import  iw.pollweb.model.dao.SupervisorDAO;
-import  iw.pollweb.model.dto.*;
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.ParticipantDAO;
+import iw.pollweb.model.dao.QuestionDAO;
+import iw.pollweb.model.dao.SubmissionDAO;
+import iw.pollweb.model.dao.SupervisorDAO;
+import iw.pollweb.model.dto.*;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -30,7 +24,7 @@ public class SurveyProxy extends Survey {
 
   public SurveyProxy (DataLayer dataLayer) {
     super();
-    //dependency injection
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
     this.supervisorID = 0;
@@ -177,7 +171,7 @@ public class SurveyProxy extends Survey {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }
@@ -188,7 +182,7 @@ public class SurveyProxy extends Survey {
 
   public void setSupervisorID (int supervisorID) {
     this.supervisorID = supervisorID;
-    //resetto la cache dell'oggetto Supervisor
+    // Resetto la cache dell'oggetto Supervisor
     super.setSupervisor(null);
   }
 }

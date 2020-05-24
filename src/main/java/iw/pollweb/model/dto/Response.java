@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto;
-
 
 /**
  * @author Primiano Medugno
@@ -18,10 +12,8 @@ public class Response {
   private Participant participant;
   private Submission submission;
 
-  // costruttori
-  public Response () {
-  }
-
+  // Costruttori
+  public Response () {}
   public Response (int id, String value, Question question, Participant participant, Submission submission) {
     this.id = id;
     this.value = value;
@@ -30,7 +22,7 @@ public class Response {
     this.submission = submission;
   }
 
-  // getter e setter
+  // Getter & Setter
   public int getID () {
     return id;
   }

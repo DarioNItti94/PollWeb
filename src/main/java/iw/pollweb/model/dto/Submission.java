@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto;
-
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -21,10 +15,8 @@ public class Submission {
   private Participant participant;
   private List<Response> responses;
 
-  // costruttori
-  public Submission () {
-  }
-
+  // Costruttori
+  public Submission () {}
   public Submission (int id, Timestamp timestamp, Survey survey, Participant participant, List<Response> responses) {
     this.id = id;
     this.timestamp = timestamp;
@@ -33,7 +25,7 @@ public class Submission {
     this.responses = responses;
   }
 
-  // getter e setter
+  // Getter & Setter
   public int getID () {
     return id;
   }

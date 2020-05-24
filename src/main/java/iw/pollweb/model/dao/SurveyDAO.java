@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dao;
+
 import iw.framework.data.DataException;
 import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
@@ -18,27 +14,18 @@ import java.util.List;
 
 public interface SurveyDAO {
 
-  // utility
+  // Utility
   Survey createSurvey ();
-
   Survey createSurveyFromRS (ResultSet rs) throws DataException;
 
   // CRUD
   void storeSurvey (Survey survey) throws DataException;
-
   Survey getSurveyByID (int id) throws DataException;
-
   List<Survey> getSurveys () throws DataException;
-
   List<Survey> getSurveysBySupervisor (Supervisor supervisor) throws DataException;
-
   List<Survey> getSurveysByReservation (boolean isReserved) throws DataException;
-
   List<Survey> getSurveysByVisibilityAndReservation (boolean isActive, boolean isReserved) throws DataException;
-
   List<Survey> getSurveysByVisibility (boolean isActive) throws DataException;
-
   List<Survey> getSurveysByStatus (boolean isClosed) throws DataException;
-
   void deleteSurvey (int id) throws DataException;
 }

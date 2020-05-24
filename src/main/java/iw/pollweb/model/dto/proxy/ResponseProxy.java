@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iw.pollweb.model.dto.proxy;
 
-import  iw.framework.data.DataException;
-import  iw.framework.data.DataLayer;
-import  iw.pollweb.model.dao.ParticipantDAO;
-import  iw.pollweb.model.dao.QuestionDAO;
-import  iw.pollweb.model.dao.SubmissionDAO;
-import  iw.pollweb.model.dto.Participant;
-import  iw.pollweb.model.dto.Question;
-import  iw.pollweb.model.dto.Response;
-import  iw.pollweb.model.dto.Submission;
+import iw.framework.data.DataException;
+import iw.framework.data.DataLayer;
+import iw.pollweb.model.dao.ParticipantDAO;
+import iw.pollweb.model.dao.QuestionDAO;
+import iw.pollweb.model.dao.SubmissionDAO;
+import iw.pollweb.model.dto.Participant;
+import iw.pollweb.model.dto.Question;
+import iw.pollweb.model.dto.Response;
+import iw.pollweb.model.dto.Submission;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +27,7 @@ public class ResponseProxy extends Response {
 
   public ResponseProxy (DataLayer dataLayer) {
     super();
-    //dependency injection
+    // Dependency Injection
     this.dataLayer = dataLayer;
     this.dirty = false;
     this.questionID = 0;
@@ -126,7 +121,7 @@ public class ResponseProxy extends Response {
     this.dirty = true;
   }
 
-  // metodi del proxy
+  // Metodi del proxy
   public boolean isDirty () {
     return dirty;
   }
@@ -137,19 +132,19 @@ public class ResponseProxy extends Response {
 
   public void setQuestionID (int questionID) {
     this.questionID = questionID;
-    //resetto la cache dell'oggetto Survey
+    // Resetto la cache dell'oggetto Survey
     super.setQuestion(null);
   }
 
   public void setParticipantID (int participantID) {
     this.participantID = participantID;
-    //resetto la cache dell'oggetto Survey
+    // Resetto la cache dell'oggetto Survey
     super.setParticipant(null);
   }
 
   public void setSubmissionID (int submissionID) {
     this.submissionID = submissionID;
-    //resetto la cache dell'oggetto Survey
+    // Resetto la cache dell'oggetto Survey
     super.setSubmission(null);
   }
 }
