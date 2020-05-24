@@ -70,6 +70,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
     try {
       SupervisorProxy supervisor = createSupervisor();
 
+      supervisor.setID(rs.getInt("id"));
       supervisor.setFirstName(rs.getString("firstName"));
       supervisor.setLastName(rs.getString("lastName"));
       supervisor.setEmail(rs.getString("email"));
