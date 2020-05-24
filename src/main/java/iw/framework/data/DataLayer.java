@@ -56,8 +56,8 @@ public class DataLayer implements AutoCloseable {
   }
 
   /*
-    metodo dell'interfaccia AutoCloseable che ci permette di usare
-    il DataLayer nei try-with-resources
+    Metodo dell'interfaccia AutoCloseable che ci permette
+    di usare il DataLayer nei try-with-resources
   */
   @Override
   public void close () throws Exception {

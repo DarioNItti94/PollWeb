@@ -76,6 +76,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
     try {
       SurveyProxy survey = createSurvey();
 
+      survey.setID(rs.getInt("id"));
       survey.setTitle(rs.getString("title"));
       survey.setOpeningText(rs.getString("openingText"));
       survey.setClosingText(rs.getString("closingText"));
