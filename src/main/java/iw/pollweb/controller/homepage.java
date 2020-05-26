@@ -1,4 +1,4 @@
-package iw.pollweb.controller.Page;
+package iw.pollweb.controller;
 
 import iw.framework.data.DataException;
 import iw.framework.result.SplitSlashesFmkExt;
@@ -24,13 +24,10 @@ public class homepage extends BaseController {
         try {
             TemplateResult res = new TemplateResult(getServletContext());
             List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveysByReservation(false);
-            if(surveys.size() == 1){
-                System.err.println("ci sono elementi nella lista");
-            }
             request.setAttribute("surveys", surveys);
             request.setAttribute("page_title", "home");
             request.setAttribute("strip_slashes", new SplitSlashesFmkExt());
-            res.activate("/home.ftl.html", request, response);
+            res.activate("home.ftl.html", request, response);
         } catch (TemplateManagerException | DataException ex) {
             ex.printStackTrace();
         }

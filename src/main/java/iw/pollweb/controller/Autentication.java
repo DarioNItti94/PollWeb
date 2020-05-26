@@ -6,6 +6,7 @@
 package iw.pollweb.controller;
 
 import iw.framework.data.DataException;
+import iw.framework.result.FailureResult;
 import iw.framework.result.SplitSlashesFmkExt;
 import iw.framework.result.TemplateManagerException;
 import iw.framework.result.TemplateResult;
@@ -17,6 +18,8 @@ import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Supervisor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.security.auth.spi.LoginModule;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +36,30 @@ public class Autentication extends BaseController {
     /*
     Questo metodo servirà per eseguire l'accesso al partecipante dei sondaggi
     */
+    
+      
+      protected void action_error(HttpServletRequest request, HttpServletResponse response) {
+        
+        if(request.getAttribute("exception") != null) {
+            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+        } else {
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+        }
+        
+    }
+      
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException, TemplateManagerException{
+         HttpSession s = SecurityLayer.checkSession(request);
+            if (s != null){
+                System.out.println("loggato");
+            }else{
+                System.out.println("non loggato");
+            }
+            TemplateResult res = new TemplateResult(getServletContext());
+            request.setAttribute("split_shalshes",new SplitSlashesFmkExt());
+            request.setAttribute("page_title", "login");
+            res.activate("/login.ftl.html", request, response);      
+    }
  
       private void action_login_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
@@ -140,6 +167,7 @@ public class Autentication extends BaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException {
         try {
+            action_default(request, response);
             if(request.getParameter("login_part")!= null){
                 action_login_part(request, response);
             }else if(request.getParameter("login_sup") != null){
@@ -149,6 +177,9 @@ public class Autentication extends BaseController {
             }
         } catch (IOException ex) {
             System.out.println(ex);
+        } catch (TemplateManagerException ex) {
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         }
         
        
