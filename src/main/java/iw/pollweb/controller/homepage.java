@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class homepage extends BaseController {
 
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
             TemplateResult res = new TemplateResult(getServletContext());
             List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveysByReservation(false);

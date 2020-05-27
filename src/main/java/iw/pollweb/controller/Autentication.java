@@ -50,11 +50,6 @@ public class Autentication extends BaseController {
       
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException, TemplateManagerException{
          HttpSession s = SecurityLayer.checkSession(request);
-            if (s != null){
-                System.out.println("loggato");
-            }else{
-                System.out.println("non loggato");
-            }
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("split_shalshes",new SplitSlashesFmkExt());
             request.setAttribute("page_title", "login");
@@ -74,7 +69,7 @@ public class Autentication extends BaseController {
                 if (participantID > 0) {
                     participant = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().getParticipantByID(participantID);
                     SecurityLayer.createSession(request, participant.getEmail(), participant.getID());
-                    response.sendRedirect("/Sondaggio");
+                    response.sendRedirect("/profilo");
                 } else {
                     throw new ServletException("Email e Password errati");
                 }
@@ -104,7 +99,7 @@ public class Autentication extends BaseController {
                 if (supervisorID > 0) {
                     supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID(supervisorID);
                     SecurityLayer.createSession(request, supervisor.getEmail(), supervisor.getID());
-                    response.sendRedirect("/Dashboard");
+                    response.sendRedirect("/profile");
                 } else {
                     /*
                     se la ricerca del supervisore non va a buon fine chiamiamo il metodo
@@ -139,7 +134,7 @@ public class Autentication extends BaseController {
                 if (adminID > 0) {
                     admin = ((PollWebDataLayer) request.getAttribute("datalayer")).getAdminDAO().getAdminByID(adminID);
                     SecurityLayer.createSession(request, admin.getEmail(), admin.getID());
-                    response.sendRedirect("/");
+                    response.sendRedirect("/profile");
                 } else {
                     throw new ServletException("Password e Email errati!");
                 }
