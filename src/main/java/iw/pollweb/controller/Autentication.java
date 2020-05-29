@@ -56,7 +56,7 @@ public class Autentication extends BaseController {
             res.activate("/login.ftl.html", request, response);      
     }
  
-      private void action_login_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     private void action_login_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (email != null && password != null) {
@@ -69,7 +69,7 @@ public class Autentication extends BaseController {
                 if (participantID > 0) {
                     participant = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().getParticipantByID(participantID);
                     SecurityLayer.createSession(request, participant.getEmail(), participant.getID());
-                    response.sendRedirect("/profilo");
+                    response.sendRedirect("sondaggio");
                 } else {
                     throw new ServletException("Email e Password errati");
                 }
@@ -80,6 +80,9 @@ public class Autentication extends BaseController {
             throw new ServletException("inserisci i parametri");
         }
     }
+    
+    
+  
       
       /*
       Questo metodo servirà per l'accesso del supervisore ai sondaggi
@@ -162,13 +165,16 @@ public class Autentication extends BaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException {
         try {
-            action_default(request, response);
-            if(request.getParameter("login_part")!= null){
+            
+              if(request.getParameter("login_part")!= null){ 
                 action_login_part(request, response);
             }else if(request.getParameter("login_sup") != null){
                 action_login_sup(request, response);
             }else if(request.getParameter("logout") != null){
                 action_logout(request, response);
+            }else{
+                action_default(request, response);
+            
             }
         } catch (IOException ex) {
             System.out.println(ex);
