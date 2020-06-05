@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/sondaggi_creati.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>PollWeb</title>
+</head>
+
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand navbar-light bg-light">
+
+            <span class="navbar-brand col-md-1">PollWeb</span>
+
+            <ul class="navbar-nav col-md-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="home_admin.html">Home</a>
+                </li>
+                <li class="nav-item modale-nav">
+                    <a class="nav-link" data-toggle="modal" data-target="#firstModal">Crea sondaggio</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link">Sondaggi creati</a>
+                </li>
+                <#if logged="admin">
+                    <li class="nav-item">
+                        <a class="nav-link" href="crea_supervisore.html">Crea supervisore</a>
+                    </li>
+                </#if>
+            </ul>
+
+            <ul class="navbar-nav col-md-1 offset-md-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="home_user_anonimo.html">Logout</a>
+                </li>
+            </ul>
+
+        </nav>
+
+    </header>
+
+    <div class="container">
+        <div class="bd-buttons">
+            <button class="my-button btn btn-light sondaggio">
+                <a class="tasto-sondaggio" href="sondaggio.html">Sondaggio</a>
+                <i class="fa fa-user-plus user-icon"></i>
+                <i class="fa fa-edit edit-icon"></i>
+                <i class="fa fa-times cross-icon"></i>
+            </button>
+            <button class="my-button btn btn-light sondaggio">
+                <a class="tasto-sondaggio" href="sondaggio.html">Sondaggio</a>
+                <i class="fa fa-user-plus user-icon"></i>
+                <i class="fa fa-edit edit-icon"></i>
+                <i class="fa fa-times cross-icon"></i>
+            </button>
+        </div>
+
+        <div class="modal fade" id="firstModal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">Crea sondaggio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="creazione_domande.html" method="post">
+                            <div class="form-group">
+                                <label for="FormControlInput1">Titolo</label>
+                                <input name="title" type="text" class="form-control" id="FormControlInput1" required>
+                            </div>
+                            <#if logged="admin">
+                                <div class="form-group">
+                                    <label for="FormControlInput2">Inserisci supervisori</label>
+                                    <input name="supervisorID" type="text" class="form-control" id="FormControlInput2">
+                                </div>
+                            </#if>
+                            <div class="form-group">
+                                <label for="FormControlTextarea1">Testo di apertura</label>
+                                <textarea name="openingText" class="form-control" id="FormControlTextarea1"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlTextarea2">Testo di chiusura</label>
+                                <textarea name="closingText" class="form-control" id="FormControlTextarea2"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlSelect1">Numero di domande</label>
+                                <select class="form-control" id="FormControlSelect1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                        <button class="btn btn-primary" data-toggle="modal">Avanti</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

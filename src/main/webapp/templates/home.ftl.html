@@ -3,8 +3,10 @@
             <#list surveys as survey>
                 <a href="Sondaggio.html">
                     <div class="row">
-                        <button class="btn btn-light sondaggio col-md-12">
+                        <button class="btn btn-light sondaggio col-md-12" onClick="">
                             ${survey.title}
+                            ${survey.openingText}
+                            ${survey.closingText}
                         </button>
                     </div>
                 </a>

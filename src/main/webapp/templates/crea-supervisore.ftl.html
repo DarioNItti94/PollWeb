@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/crea_supervisore.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>PollWeb</title>
+</head>
+
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand navbar-light bg-light">
+
+            <span class="navbar-brand col-md-1">PollWeb</span>
+
+            <ul class="navbar-nav col-md-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="home_admin.html">Home</a>
+                </li>
+                <li class="nav-item modale-nav">
+                    <a class="nav-link" data-toggle="modal" data-target="#firstModal">Crea sondaggio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sondaggi_creati.html">Sondaggi creati</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Crea supervisore</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav col-md-1 offset-md-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="home_user_anonimo.html">Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div class="container">
+
+        <div class="card bd-login bg-light">
+            <div id="tab2" class="card-body tab-content">
+                <h5 class="card-title">Creazione supervisore</h5>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="InputEmail1">E-mail</label>
+                        <input name="email" type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp"
+                            placeholder="E-mail">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputNome">Nome</label>
+                        <input name="firstName" type="text" class="form-control" id="InputNome" placeholder="Nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputCognome">Cognome</label>
+                        <input name="lastName" type="text" class="form-control" id="InputCognome" placeholder="Cognome">
+                    </div>
+                    <button type="submit" class="btn btn-primary tasto-login">
+                        <a href="sondaggio.html" class="tasto-crea">Crea</a>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="firstModal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">Crea sondaggio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="creazione_domande.html" method="post">
+                            <div class="form-group">
+                                <label for="FormControlInput1">Titolo</label>
+                                <input name="title" type="text" class="form-control" id="FormControlInput1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlInput2">Inserisci supervisori</label>
+                                <input name="supervisorID" type="text" class="form-control" id="FormControlInput2">
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlTextarea1">Testo di apertura</label>
+                                <textarea name="openingText" class="form-control" id="FormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlTextarea2">Testo di chiusura</label>
+                                <textarea name="closingText" class="form-control" id="FormControlTextarea2" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlSelect1">Numero di domande</label>
+                                <select class="form-control" id="FormControlSelect1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                        <button class="btn btn-primary" data-toggle="modal">Avanti</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>

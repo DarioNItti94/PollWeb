@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/creazione_domande.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://rawgit.com/RubaXa/Sortable/master/Sortable.js"></script>
+    <title>PollWeb</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-light bg-light">
+
+            <span class="navbar-brand col-md-1">PollWeb</span>
+
+            <ul class="navbar-nav col-md-3"></ul>
+
+            <ul class="navbar-nav col-md-1 offset-md-7">
+                <li class="nav-item">
+                    <a class="nav-link" href="home_user_anonimo.html">Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div class="container">
+        <h3 class="card-title">Modifica sondaggio</h5>
+            <div class="list-group sortable">
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="row d-flex w-100">
+                        <h5 class="col-md-7">1) {question.title}</h5>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <button class="col-md-3 mr-1 offset-md-5 btn btn-secondary" type="submit">Modifica</button>
+                                <button class="col-md-3 btn btn-danger" type="submit">Elimina</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-1">{question.text}</p>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="row d-flex w-100">
+                        <h5 class="col-md-7">2) {question.title}</h5>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <button class="col-md-3 mr-1 offset-md-5 btn btn-secondary" type="submit">Modifica</button>
+                                <button class="col-md-3 btn btn-danger" type="submit">Elimina</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-1">{question.text}</p>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="row d-flex w-100">
+                        <h5 class="col-md-7">3) {question.title}</h5>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <button class="col-md-3 mr-1 offset-md-5 btn btn-secondary" type="submit">Modifica</button>
+                                <button class="col-md-3 btn btn-danger" type="submit">Elimina</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-1">{question.text}</p>
+                </a>
+            </div>
+            <button class="btn btn-primary mt-2" type="submit">Salva</button>
+    </div>
+</body>
+<script>new Sortable(document.getElementsByClassName('sortable')[0]); </script>
+
+</html>

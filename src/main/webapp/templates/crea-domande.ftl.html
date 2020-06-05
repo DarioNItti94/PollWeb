@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/creazione_domande.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>PollWeb</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-light bg-light">
+
+            <span class="navbar-brand col-md-1">PollWeb</span>
+
+            <ul class="navbar-nav col-md-3"></ul>
+
+            <ul class="navbar-nav col-md-1 offset-md-7">
+                <li class="nav-item">
+                    <a class="nav-link" href="home_user_anonimo.html">Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div class="container">
+        <div class="card bd-crea-sondaggio mt-5 mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Creazione domande</h5>
+                <form method="get">
+                    <input type="hidden" name="survey" value="#{survey}">
+                    <#list survey.questions as question>
+                        <div class="form-group">
+                            <input name="type" type="text" placeholder="Tipo domanda" class="form-control"
+                                value="${question.type}">
+                            <input name="type">
+                        </div>
+                        <#if question.type=="short text">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                        <#if question.type=="short">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                        <#if question.type=="long">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                        <#if question.type=="number">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                        <#if question.type=="date">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                        <#if question.type=="single">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                        <#if question.type=="multiple">
+                            <div class="form-group">
+                                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                                    value="${question.text}">
+                            </div>
+                            <div class="form-group">
+                                <input name="note" placeholder="Nota domanda" type="text" class="form-control">
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="isMandatory" id="defaultCheck1" value="${question.isMandatory}">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Obbligatoria
+                                </label>
+                            </div>
+                        </#if>
+                    </#list>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
