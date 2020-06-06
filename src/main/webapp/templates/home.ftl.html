@@ -1,7 +1,7 @@
           
 <#if (surveys?size>0)>
             <#list surveys as survey>
-                <a href="Sondaggio.html">
+                <a href="/PollWeb/survey?id=${survey.ID}">
                     <div class="row">
                         <button class="btn btn-light sondaggio col-md-12" onClick="">
                             ${survey.title}

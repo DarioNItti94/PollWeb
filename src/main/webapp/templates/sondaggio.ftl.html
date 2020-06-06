@@ -34,7 +34,7 @@
             <div class="card-body">
                 <h5 class="card-title">${survey.title}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">${survey.openingText}</h6>
-                <form action="/pollweb/surveyscontroller?survey=${survey.id}" method="get">
+                <form action="/Pollweb/survey" method="get">
                     <#list survey.questions as question>
                     <input type="hidden" name="survey" value="#{survey.id}" name="${question.text}">
                     <!--#list survey.questions as question-->

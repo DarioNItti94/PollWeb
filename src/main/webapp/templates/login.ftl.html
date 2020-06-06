@@ -26,14 +26,13 @@
                                 <input name="passwordAS" type="password" class="form-control" id="InputPassword1"
                                     placeholder="Password">
                             </div>
-                            <button value="loginAS" name="loginAS" type="submit" class="btn btn-primary tasto-login">
+                            <input value="accedi come amministratore o supervisore" name="login_sup" type="submit" class="btn btn-primary tasto-login">
                                 <a class="tasto-accedi">Accedi come admin/supervisore</a>
-                            </button>
                         </form>
                     </div>
                     <div id="tab2" class="card-body tab-content tab-user">
                         <h5 class="card-title">Login utente</h5>
-                        <form method="post">
+                        <form method="post" action="/PollWeb/login">
                             <div class="form-group">
                                 <label for="InputEmail1">E-mail</label>
                                 <input name="email" type="email" class="form-control" id="InputEmail1"
@@ -44,11 +43,11 @@
                                 <input name="password" type="password" class="form-control" id="InputPassword1"
                                     placeholder="Password">
                             </div>
-                            <button value="login" name="login" type="submit" class="btn btn-primary tasto-login">
-                                <a class="tasto-accedi">Accedi come utente</a>
-                            </button>
+                            <input value="Accedi come utente" name="login_part" type="submit" class="btn btn-primary tasto-login tasto-accedi">
+                            
                         </form>
                     </div>
+                    
                 </div>
             </div>
         </div>

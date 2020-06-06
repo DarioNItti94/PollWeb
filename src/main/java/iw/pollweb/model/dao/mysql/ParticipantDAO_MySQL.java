@@ -7,7 +7,6 @@ import iw.pollweb.model.dao.ParticipantDAO;
 import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Survey;
 import iw.pollweb.model.dto.proxy.ParticipantProxy;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
