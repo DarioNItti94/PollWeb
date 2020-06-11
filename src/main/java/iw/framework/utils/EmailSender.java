@@ -32,7 +32,8 @@ public class EmailSender {
         //compose message
         try {
             MimeMessage message = new MimeMessage(session);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            InternetAddress [] parse = InternetAddress.parse(to, true);
+            message.addRecipients(Message.RecipientType.TO, parse);
             message.setSubject(sub);
             message.setText(msg);
             //send message

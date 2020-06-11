@@ -54,6 +54,10 @@
         <servlet-name>ActionOnSurvey</servlet-name>
         <servlet-class>iw.pollweb.controller.ActionOnSurvey</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ParticipantController</servlet-name>
+        <servlet-class>iw.pollweb.controller.ParticipantController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>homepage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -69,6 +73,10 @@
     <servlet-mapping>
         <servlet-name>ActionOnSurvey</servlet-name>
         <url-pattern>/modifysurvey</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ParticipantController</servlet-name>
+        <url-pattern>/participant</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

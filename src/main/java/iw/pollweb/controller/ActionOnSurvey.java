@@ -8,11 +8,14 @@ package iw.pollweb.controller;
 import iw.framework.data.DataException;
 import iw.framework.security.SecurityLayer;
 import iw.pollweb.model.PollWebDataLayer;
+import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +58,9 @@ public class ActionOnSurvey extends BaseController {
         boolean isreserved = Boolean.parseBoolean(request.getParameter("isreserved"));
         boolean isactive = Boolean.parseBoolean(request.getParameter("isactive"));
         int idsup = Integer.parseInt(request.getParameter("supervisor"));
+        List<Participant> participants = new ArrayList<Participant>();
         if (title != null && open_txt != null && close_txt != null) {
+            
             Supervisor supervisor = new Supervisor();
             Survey survey = new iw.pollweb.model.dto.Survey();
             survey.setTitle(title);
@@ -65,7 +70,10 @@ public class ActionOnSurvey extends BaseController {
             survey.setClosed(isclosed);
             survey.setReserved(isreserved);
             survey.setSupervisor(supervisor);
+            
+            survey.setParticipants(participants);
             ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
+            response.sendRedirect("/addpart");
         } else {
             throw new ServerException("inserisci i parametri");
         }
@@ -78,7 +86,6 @@ public class ActionOnSurvey extends BaseController {
             survey.setActive(false);
             response.sendRedirect("profile");
         }
-
     }
 
 
