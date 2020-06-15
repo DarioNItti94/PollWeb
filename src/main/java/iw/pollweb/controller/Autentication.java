@@ -16,8 +16,10 @@ import iw.pollweb.model.PollWebDataLayer;
 import iw.pollweb.model.dto.Admin;
 import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Supervisor;
+import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.security.auth.spi.LoginModule;
@@ -32,31 +34,29 @@ import javax.servlet.http.HttpSession;
  * @author dario
  */
 public class Autentication extends BaseController {
-    
+
     /*
     Questo metodo servirà per eseguire l'accesso al partecipante dei sondaggi
-    */
-    
-      
-      protected void action_error(HttpServletRequest request, HttpServletResponse response) {
-        
-        if(request.getAttribute("exception") != null) {
+     */
+    protected void action_error(HttpServletRequest request, HttpServletResponse response) {
+
+        if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
-        
+
     }
-      
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException, TemplateManagerException{
-         HttpSession s = SecurityLayer.checkSession(request);
-            TemplateResult res = new TemplateResult(getServletContext());
-            request.setAttribute("split_shalshes",new SplitSlashesFmkExt());
-            request.setAttribute("page_title", "login");
-            res.activate("/login.ftl.html", request, response);      
+
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, TemplateManagerException {
+        HttpSession s = SecurityLayer.checkSession(request);
+        TemplateResult res = new TemplateResult(getServletContext());
+        request.setAttribute("split_shalshes", new SplitSlashesFmkExt());
+        request.setAttribute("page_title", "login");
+        res.activate("/login.ftl.html", request, response);
     }
- 
-     private void action_login_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    private void action_login_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (email != null && password != null) {
@@ -69,7 +69,12 @@ public class Autentication extends BaseController {
                 if (participantID > 0) {
                     participant = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().getParticipantByID(participantID);
                     SecurityLayer.createSession(request, participant.getEmail(), participant.getID());
-                    response.sendRedirect("sondaggio");
+                    Survey survey = participant.getSurvey();
+                    if (survey != null && !participant.isDisabled()) {
+                        response.sendRedirect("/PollWeb/survey?id=" + survey.getID());
+                    } else {
+                        throw new ServletException("non ci sono nuovi sondaggi");
+                    }
                 } else {
                     throw new ServletException("Email e Password errati");
                 }
@@ -80,16 +85,12 @@ public class Autentication extends BaseController {
             throw new ServletException("inserisci i parametri");
         }
     }
-    
-    
-  
-      
-      /*
+
+    /*
       Questo metodo servirà per l'accesso del supervisore ai sondaggi
       all'interno di questo metodo c'è il richiamo al metodo di accesso dell'admin
-      */
-      
-      private void action_login_sup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     */
+    private void action_login_sup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("emailAS");
         String password = request.getParameter("passwordAS");
         if (email != null && password != null) {
@@ -109,7 +110,7 @@ public class Autentication extends BaseController {
                     che cercherà lo username dell'admin con la sua password
                     se non  troverà neanche questo darà un avviso che non è presente alcun 
                     utente supervisore o amministratore nel sistema
-                    */
+                     */
                     action_login_admin(request, response);
                 }
             } catch (DataException e) {
@@ -119,11 +120,12 @@ public class Autentication extends BaseController {
             throw new ServletException("inserisci i parametri");
         }
     }
-      /*
+
+    /*
       questo metodo verrà usato per eseguire l'accesso all'admin (pre-registrato)
       (metodo richiamato nel action_login_sup)
-      */
-       private void action_login_admin(HttpServletRequest request, HttpServletResponse response) throws
+     */
+    private void action_login_admin(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         String email = request.getParameter("emailAS");
         String password = request.getParameter("passwordAS");
@@ -149,13 +151,10 @@ public class Autentication extends BaseController {
         }
     }
 
-       private void action_logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void action_logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SecurityLayer.disposeSession(request);
         response.sendRedirect("/homepage");
     }
-       
-  
-
 
     @Override
     public String getServletInfo() {
@@ -165,16 +164,16 @@ public class Autentication extends BaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException {
         try {
-            
-              if(request.getParameter("login_part")!= null){ 
+
+            if (request.getParameter("login_part") != null) {
                 action_login_part(request, response);
-            }else if(request.getParameter("login_sup") != null){
+            } else if (request.getParameter("login_sup") != null) {
                 action_login_sup(request, response);
-            }else if(request.getParameter("logout") != null){
+            } else if (request.getParameter("logout") != null) {
                 action_logout(request, response);
-            }else{
+            } else {
                 action_default(request, response);
-            
+
             }
         } catch (IOException ex) {
             System.out.println(ex);
@@ -182,10 +181,7 @@ public class Autentication extends BaseController {
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
-        
-       
+
     }
-    
-    
 
 }

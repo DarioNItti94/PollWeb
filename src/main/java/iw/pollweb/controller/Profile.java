@@ -5,7 +5,6 @@
  */
 package iw.pollweb.controller;
 
-import freemarker.template.TemplateException;
 import iw.framework.data.DataException;
 import iw.framework.result.SplitSlashesFmkExt;
 import iw.framework.result.TemplateManagerException;
@@ -18,8 +17,6 @@ import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,10 +28,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author dario
  */
-@WebServlet(name = "profile", urlPatterns = {"/profile"})
+
 public class Profile extends BaseController {
 
-    private void action_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*private void action_part(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             int partid = SecurityLayer.checkNumeric(request.getParameter("id"));
@@ -54,7 +51,8 @@ public class Profile extends BaseController {
 
         }
     }
-
+*/
+    
     private void action_admin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
@@ -91,15 +89,13 @@ public class Profile extends BaseController {
             System.err.println(ex2);
         }
     }
-
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            if (request.getParameter("profilo-part") != null) {
-                action_part(request, response);
-            } else if (request.getParameter("profilo-sup") != null) {
+             if (request.getParameter("sup") != null) {
                 action_sup(request, response);
-            } else if (request.getParameter("profilo-admin") != null) {
+            } else if (request.getParameter("admin") != null) {
                 action_admin(request, response);
             } else {
                 action_error(request, response);
@@ -116,3 +112,7 @@ public class Profile extends BaseController {
     }// </editor-fold>
 
 }
+
+
+
+   
