@@ -3,7 +3,6 @@ C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dto\Participant.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\framework\data\DataLayer.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dao\ChoiceDAO.java
-C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\controller\ParticipantController.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dao\mysql\SupervisorDAO_MySQL.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\framework\result\FailureResult.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dto\Admin.java
@@ -30,6 +29,7 @@ C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\framework\res
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dto\proxy\QuestionProxy.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dto\Supervisor.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\framework\result\SplitSlashesFmkExt.java
+C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\controller\SupervisorControl.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\model\dao\QuestionDAO.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\iw\pollweb\controller\SurveyController.java
 C:\Users\dario\Documents\NetBeansProjects\PollWeb\src\main\java\Test_emailSender.java

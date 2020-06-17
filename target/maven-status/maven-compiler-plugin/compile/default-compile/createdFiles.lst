@@ -4,7 +4,6 @@ iw\framework\data\DataException.class
 iw\pollweb\controller\Autentication.class
 iw\pollweb\model\dao\ParticipantDAO.class
 iw\framework\result\TemplateManagerException.class
-Test_emailSender.class
 iw\framework\result\FailureResult.class
 iw\pollweb\model\dto\Participant.class
 iw\pollweb\model\dto\proxy\SupervisorProxy.class
@@ -18,6 +17,7 @@ iw\pollweb\model\dto\proxy\SurveyProxy.class
 iw\pollweb\model\dao\SupervisorDAO.class
 iw\framework\result\HTMLResult.class
 iw\framework\result\SplitSlashesFmkExt.class
+iw\pollweb\controller\SupervisorControl.class
 iw\framework\result\DataModelFiller.class
 iw\pollweb\model\dao\SubmissionDAO.class
 iw\pollweb\model\PollWebDataLayer.class
@@ -25,7 +25,6 @@ iw\pollweb\model\dto\Choice.class
 iw\pollweb\model\dao\AdminDAO.class
 iw\framework\result\TemplateResult.class
 iw\pollweb\controller\Profile.class
-iw\pollweb\model\dao\mysql\SubmissionDAO_MySQL.class
 iw\pollweb\model\dto\Question.class
 iw\pollweb\controller\homepage.class
 iw\pollweb\model\dto\proxy\ParticipantProxy.class
@@ -34,13 +33,10 @@ iw\pollweb\model\dao\SurveyDAO.class
 iw\framework\utils\CSVUtility.class
 iw\pollweb\model\dto\proxy\ResponseProxy.class
 iw\pollweb\model\dto\Response.class
-iw\pollweb\model\dto\proxy\AdminProxy.class
-iw\pollweb\model\dao\mysql\AdminDAO_MySQL.class
 iw\pollweb\controller\BaseController.class
 iw\pollweb\model\dao\mysql\ChoiceDAO_MySQL.class
 iw\framework\utils\PasswordUtility.class
 iw\pollweb\model\dao\mysql\SurveyDAO_MySQL.class
-iw\pollweb\controller\ParticipantController.class
 iw\framework\utils\EmailSender.class
 iw\pollweb\model\dto\Survey.class
 iw\framework\result\StreamResult.class
