@@ -40,38 +40,18 @@ public class Profile extends BaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws ServletException, IOException, DataException, TemplateManagerException {
         request.setAttribute("page_title", "profile");
         System.out.println((int) s.getAttribute("userid"));
-        if((int) s.getAttribute("userid") == 1){
+        if ((int) s.getAttribute("userid") == 1) {
             Admin admin = ((PollWebDataLayer) request.getAttribute("datalayer")).getAdminDAO().getAdminByID((int) s.getAttribute("userid"));
-        List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveys();
-        request.setAttribute("surveys", surveys);
-        }else{
-        Supervisor supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID((int) s.getAttribute("userid"));
-        List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveysBySupervisor(supervisor);
-        request.setAttribute("surveys", surveys);
+            List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveys();
+            request.setAttribute("surveys", surveys);
+        } else {
+            Supervisor supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID((int) s.getAttribute("userid"));
+            List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveysBySupervisor(supervisor);
+            request.setAttribute("surveys", surveys);
         }
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("split_shalshes", new SplitSlashesFmkExt());
         res.activate("/Dashboard.ftl.html", request, response);
-    }
-
-    private void action_sup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-
-            HttpSession s = SecurityLayer.checkSession(request);
-            int supid = SecurityLayer.checkNumeric(request.getParameter("id"));
-            Supervisor supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID(supid);
-            if (s != null) {
-                System.out.println("profilo non caricato");
-            }
-            List<Survey> surveys = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveysBySupervisor(supervisor);
-            request.setAttribute("surveys", surveys);
-            TemplateResult res = new TemplateResult(getServletContext());
-            request.setAttribute("split_shalshes", new SplitSlashesFmkExt());
-            res.activate("profile.ftl.html", request, response);
-        } catch (TemplateManagerException | DataException ex2) {
-            ex2.printStackTrace();
-            System.err.println(ex2);
-        }
     }
 
     private void action_create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DataException {
@@ -83,32 +63,40 @@ public class Profile extends BaseController {
         boolean isactive = Boolean.parseBoolean(request.getParameter("isactive"));
         int idsup = Integer.parseInt(request.getParameter("supervisor"));
         if (title != null && open_txt != null && close_txt != null) {
-            Participant participant = new Participant();
-            Supervisor supervisor = new Supervisor();
-            Survey survey = new iw.pollweb.model.dto.Survey();
-            survey.setTitle(title);
-            survey.setOpeningText(open_txt);
-            survey.setClosingText(close_txt);
-            survey.setActive(isactive);
-            survey.setClosed(isclosed);
-            survey.setReserved(isreserved);
-            survey.setSupervisor(supervisor);
-            ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
-            response.sendRedirect("/actionquestion");
+            Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().createSurvey();
+            List<Supervisor> supervisors = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisors();
+            request.setAttribute("supervisor", supervisors);
+            //List< Supervisor> supervisors = ((PollWebDataLayer)request.getAttribute("datalayer")).getSupervisorDAO().getSupervisors().get(idsup);
+            if (survey != null) {
+                survey.setTitle(title);
+                survey.setOpeningText(open_txt);
+                survey.setClosingText(close_txt);
+                survey.setActive(isactive);
+                survey.setClosed(isclosed);
+                survey.setReserved(isreserved);
+                survey.setSupervisor(supervisors.get(idsup));
+                ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
+                SecurityLayer.createSession(request,survey.getTitle(),survey.getID());
+                response.sendRedirect("/actionquestion");
+            } else {
+                request.setAttribute("message", "errore caricamento sondaggio");
+                action_error(request, response);
+            }
         } else {
             throw new ServletException("inserisci i parametri");
         }
     }
-    
+
     private void action_addPart(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws ServletException, DataException, IOException {
         //prendo il sondaggio appena creato attraverso il suo id
         Survey currentSurvey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID((int) s.getAttribute("id"));
+        
         String Fname = request.getParameter("Fname");
         String Lname = request.getParameter("Lname");
         String Email = request.getParameter("email");
         String password = PasswordUtility.generateRandomPassword();
         //creo un nuovo partecipante
-        Participant participant = new Participant();
+        Participant participant = ((PollWebDataLayer)request.getAttribute("datalayer")).getParticipantDAO().createParticipant();
         //setto i valori nel database
         participant.setFirstName(Fname);
         participant.setLastName(Lname);
@@ -117,7 +105,7 @@ public class Profile extends BaseController {
         participant.setSurvey(currentSurvey);
         List<Participant> participants = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().getParticipants();
         ListIterator<Participant> pIterator = participants.listIterator();
-        
+
         while (pIterator.hasNext()) {
             String email = pIterator.next().getEmail();
             //dopo aver settato tutte le variabili del DTO vado ad inviare la mail
@@ -129,8 +117,6 @@ public class Profile extends BaseController {
             EmailSender.send(mittente, pass, email, obj, testo);
         }
 
- 
-
         response.sendRedirect("/modifysurvey?survey");
     }
 
@@ -139,8 +125,8 @@ public class Profile extends BaseController {
         try {
             HttpSession s = checkSession(request);
             if (request.getParameter("create") != null) {
-                action_sup(request, response);
-            }else if(request.getParameter("addPart") != null){
+                action_create(request, response);
+            } else if (request.getParameter("addPart") != null) {
                 action_addPart(request, response, s);
             } else {
                 action_default(request, response, s);
