@@ -15,7 +15,7 @@
                 <div class="tab-folder">
                     <div id="tab1" class="card-body tab-content tab-admin">
                         <h5 class="card-title">Login admin/supervisore</h5>
-                        <form method="post">
+                        <form method="post" action="/PollWeb/login">
                             <div class="form-group">
                                 <label for="InputEmail1">E-mail</label>
                                 <input name="emailAS" type="email" class="form-control" id="InputEmail1"
@@ -26,8 +26,7 @@
                                 <input name="passwordAS" type="password" class="form-control" id="InputPassword1"
                                     placeholder="Password">
                             </div>
-                            <input value="accedi come amministratore o supervisore" name="login_sup" type="submit" class="btn btn-primary tasto-login">
-                                <a class="tasto-accedi">Accedi come admin/supervisore</a>
+                            <input value="Accedi come admin/supervisore" name="login_sup" type="submit" class="btn btn-primary tasto-login">
                         </form>
                     </div>
                     <div id="tab2" class="card-body tab-content tab-user">

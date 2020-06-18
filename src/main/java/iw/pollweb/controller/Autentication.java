@@ -139,7 +139,7 @@ public class Autentication extends BaseController {
                 if (adminID > 0) {
                     admin = ((PollWebDataLayer) request.getAttribute("datalayer")).getAdminDAO().getAdminByID(adminID);
                     SecurityLayer.createSession(request, admin.getEmail(), admin.getID());
-                    response.sendRedirect("/profile");
+                    response.sendRedirect("/PollWeb/profile");
                 } else {
                     throw new ServletException("Password e Email errati!");
                 }

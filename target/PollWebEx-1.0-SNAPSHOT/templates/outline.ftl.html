@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html>
+    <head>
+        <link rel="stylesheet" href="templates/css/all.css" type="text/css"/>
+        <link rel="stylesheet" href="templates/css/crea_supervisore.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/creazione_domande.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/fontawesome.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/fontawesome.min.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/login.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/sondaggi_creati.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/sondaggio.css" type="text/css"/>   
+        <link rel="stylesheet" href="templates/css/style.css" type="text/css"/>
+         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <header>
+    
+            <nav class="navbar navbar-expand navbar-light bg-light">
+                
+                <span class="navbar-brand col-md-1">PollWeb</span>
+                
+    
+                <ul class="navbar-nav col-md-3">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                </ul>
+             <#if (page_title == "home")>
+                <ul class="navbar-nav col-md-1 offset-md-7">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/PollWeb/login">Login
+                        </a>
+                        
+                    </li>
+                </ul>
+                </#if>
+            </nav>
+    
+        </header>
+        <div class="container" >
+                    <#include content_tpl>
+                </div>
+    </body>
+</html>
