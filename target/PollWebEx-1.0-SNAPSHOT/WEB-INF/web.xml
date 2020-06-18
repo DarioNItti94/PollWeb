@@ -66,10 +66,6 @@
         <servlet-name>SupervisorControl</servlet-name>
         <servlet-class>iw.pollweb.controller.SupervisorControl</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CreateSurvey</servlet-name>
-        <servlet-class>iw.pollweb.controller.CreateSurvey</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>homepage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -97,10 +93,6 @@
     <servlet-mapping>
         <servlet-name>SupervisorControl</servlet-name>
         <url-pattern>/supervisor</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateSurvey</servlet-name>
-        <url-pattern>/create</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

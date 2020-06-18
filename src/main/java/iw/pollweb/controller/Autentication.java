@@ -103,7 +103,7 @@ public class Autentication extends BaseController {
                 if (supervisorID > 0) {
                     supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID(supervisorID);
                     SecurityLayer.createSession(request, supervisor.getEmail(), supervisor.getID());
-                    response.sendRedirect("/profile");
+                    response.sendRedirect("/PollWeb/profile");
                 } else {
                     /*
                     se la ricerca del supervisore non va a buon fine chiamiamo il metodo
