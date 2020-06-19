@@ -27,6 +27,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -45,6 +46,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -68,6 +70,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public SubmissionProxy createSubmissionFromRS (ResultSet rs) throws DataException {
+
     try {
       SubmissionProxy submission = createSubmission();
 
@@ -138,6 +141,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public Submission getSubmissionByID (int id) throws DataException {
+
     try {
       selectSubmissionByID.setInt(1, id);
       try (ResultSet rs = selectSubmissionByID.executeQuery()) {
@@ -153,6 +157,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public Submission getSubmissionByParticipant (Participant participant) throws DataException {
+
     try {
       selectSubmissionByParticipant.setInt(1, participant.getID());
       try (ResultSet rs = selectSubmissionByParticipant.executeQuery()) {
@@ -199,6 +204,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public void deleteSubmission (int id) throws DataException {
+
     try {
       deleteSubmission.setInt(1, id);
       deleteSubmission.executeUpdate();

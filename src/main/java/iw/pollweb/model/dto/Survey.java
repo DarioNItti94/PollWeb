@@ -21,7 +21,9 @@ public class Survey {
   private List<Submission> submissions;
 
   // Costruttori
-  public Survey () {}
+  public Survey () {
+  }
+
   public Survey (int id, String title, String openingText, String closingText, boolean isReserved, boolean isActive, boolean isClosed, Supervisor supervisor, List<Question> questions, List<Participant> participants, List<Submission> submissions) {
     this.id = id;
     this.title = title;

@@ -28,6 +28,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -67,6 +68,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
 
   @Override
   public Admin createAdminFromRS (ResultSet rs) throws DataException {
+
     try {
       AdminProxy admin = createAdmin();
 
@@ -83,6 +85,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
 
   @Override
   public int authenticateAdmin (Admin admin) throws DataException {
+
     try {
       selectAdminByEmailPassword.setString(1, admin.getEmail());
       selectAdminByEmailPassword.setString(2, admin.getHashedPassword());
@@ -105,7 +108,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
     try {
       if (admin.getID() > 0) { // UPDATE
         // Non eseguo operazioni se il proxy non presenta modifiche
-        if (admin instanceof AdminProxy && (((AdminProxy) admin).isDirty())) {
+        if (admin instanceof AdminProxy && !((AdminProxy) admin).isDirty()) {
           return;
         }
         // Eseguo l'update
@@ -138,6 +141,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
 
   @Override
   public Admin getAdminByID (int id) throws DataException {
+
     try {
       selectAdminByID.setInt(1, id);
       try (ResultSet rs = selectAdminByID.executeQuery()) {
@@ -167,6 +171,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
 
   @Override
   public void deleteAdmin (int id) throws DataException {
+
     try {
       deleteAdminByID.setInt(1, id);
       deleteAdminByID.executeUpdate();

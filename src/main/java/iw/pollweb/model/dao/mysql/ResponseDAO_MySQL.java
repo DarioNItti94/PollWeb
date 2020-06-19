@@ -31,6 +31,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -50,6 +51,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -74,6 +76,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
 
   @Override
   public Response createResponseFromRS (ResultSet rs) throws DataException {
+
     try {
       ResponseProxy response = createResponse();
 
@@ -158,6 +161,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
 
   @Override
   public Response getResponseByID (int id) throws DataException {
+
     try {
       selectResponseByID.setInt(1, id);
       try (ResultSet rs = selectResponseByID.executeQuery()) {
@@ -224,6 +228,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
 
   @Override
   public void deleteResponse (int id) throws DataException {
+
     try {
       deleteResponse.setInt(1, id);
       deleteResponse.executeUpdate();

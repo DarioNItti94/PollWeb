@@ -11,7 +11,9 @@ public class Admin {
   private String hashedPassword;
 
   // Costruttori
-  public Admin () {}
+  public Admin () {
+  }
+
   public Admin (int id, String email, String hashedPassword) {
     this.id = id;
     this.email = email;

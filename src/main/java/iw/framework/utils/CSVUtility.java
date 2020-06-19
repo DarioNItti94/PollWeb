@@ -2,7 +2,7 @@ package iw.framework.utils;
 
 /**
  * @author Primiano Medugno
- * @since 04/02/2020
+ * @since 15/06/2020
  */
 public class CSVUtility {
   //TODO lettura di un file CSV contenente un insieme di partecipanti da associare ad un sondaggio

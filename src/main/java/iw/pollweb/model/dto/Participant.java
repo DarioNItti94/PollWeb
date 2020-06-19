@@ -19,7 +19,9 @@ public class Participant {
   private List<Response> responses;
 
   // Costruttori
-  public Participant () {}
+  public Participant () {
+  }
+
   public Participant (int id, String firstName, String lastName, String email, String hashedPassword, boolean isDisabled, Survey survey, Submission submission, List<Response> responses) {
     this.id = id;
     this.firstName = firstName;

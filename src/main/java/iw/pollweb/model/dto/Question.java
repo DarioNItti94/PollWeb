@@ -19,7 +19,9 @@ public class Question {
   private List<Response> responses;
 
   // Costruttori
-  public Question () {}
+  public Question () {
+  }
+
   public Question (int id, String type, String text, String note, boolean isMandatory, int number, Survey survey, List<Choice> choices, List<Response> responses) {
     this.id = id;
     this.type = type;

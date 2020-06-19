@@ -7,6 +7,7 @@ import iw.pollweb.model.dao.ParticipantDAO;
 import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Survey;
 import iw.pollweb.model.dto.proxy.ParticipantProxy;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -43,6 +45,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -66,6 +69,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public ParticipantProxy createParticipantFromRS (ResultSet rs) throws DataException {
+
     try {
       ParticipantProxy participant = createParticipant();
 
@@ -86,6 +90,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public int authenticateParticipant (Participant participant) throws DataException {
+
     try {
       selectParticipantByEmailPassword.setString(1, participant.getEmail());
       selectParticipantByEmailPassword.setString(2, participant.getHashedPassword());
@@ -108,7 +113,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
     try {
       if (participant.getID() > 0) { // UPDATE
         // Non eseguo operazioni se il proxy non presenta modifiche
-        if (participant instanceof ParticipantProxy && ((ParticipantProxy) participant).isDirty()) {
+        if (participant instanceof ParticipantProxy && !((ParticipantProxy) participant).isDirty()) {
           return;
         }
         updateParticipant.setString(1, participant.getFirstName());
@@ -156,6 +161,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public Participant getParticipantByID (int id) throws DataException {
+
     try {
       selectParticipantByID.setInt(1, id);
       try (ResultSet rs = selectParticipantByID.executeQuery()) {
@@ -202,6 +208,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public void deleteParticipant (int id) throws DataException {
+
     try {
       deleteParticipant.setInt(1, id);
       deleteParticipant.executeUpdate();

@@ -26,6 +26,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -47,6 +48,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -73,6 +75,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
 
   @Override
   public Survey createSurveyFromRS (ResultSet rs) throws DataException {
+
     try {
       SurveyProxy survey = createSurvey();
 
@@ -99,7 +102,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
     try {
       if (survey.getID() > 0) { // UPDATE
         // Non eseguo operazioni se il proxy non presenta modifiche
-        if (survey instanceof SurveyProxy && (((SurveyProxy) survey).isDirty())) {
+        if (survey instanceof SurveyProxy && !((SurveyProxy) survey).isDirty()) {
           return;
         }
         // Eseguo l'update
@@ -153,6 +156,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
 
   @Override
   public Survey getSurveyByID (int id) throws DataException {
+
     try {
       selectSurveyByID.setInt(1, id);
       try (ResultSet rs = selectSurveyByID.executeQuery()) {
@@ -272,6 +276,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
 
   @Override
   public void deleteSurvey (int id) throws DataException {
+
     try {
       deleteSurveyByID.setInt(1, id);
       deleteSurveyByID.executeUpdate();

@@ -18,7 +18,7 @@ public class PasswordUtility {
   private static final String DIGIT = "0123456789";
   private static final String SPECIAL_CHAR = "!@#$%&*()_+-=[]?";
   private static final String PASSWORD_BASE_STRING = CHAR_LOWER + CHAR_UPPER + DIGIT + SPECIAL_CHAR;
-  private static final SecureRandom random = new SecureRandom();
+  private static final SecureRandom RANDOM = new SecureRandom();
 
   /**
    * Metodo che genera una password casuale di 10 caratteri
@@ -32,7 +32,7 @@ public class PasswordUtility {
     char randomChar;
 
     for (int i = 0; i < 10; i++) {
-      randomCharAt = random.nextInt(shuffledString.length());
+      randomCharAt = RANDOM.nextInt(shuffledString.length());
       randomChar = shuffledString.charAt(randomCharAt);
       stringBuilder.append(randomChar);
     }

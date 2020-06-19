@@ -28,6 +28,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -45,6 +46,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -67,6 +69,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public SupervisorProxy createSupervisorFromRS (ResultSet rs) throws DataException {
+
     try {
       SupervisorProxy supervisor = createSupervisor();
 
@@ -85,6 +88,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public int authenticateSupervisor (Supervisor supervisor) throws DataException {
+
     try {
       selectSupervisorByEmailPassword.setString(1, supervisor.getEmail());
       selectSupervisorByEmailPassword.setString(2, supervisor.getHashedPassword());
@@ -107,7 +111,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
     try {
       if (supervisor.getID() > 0) { //UPDATE
         // Non eseguo operazioni se il proxy non presenta modifiche
-        if (supervisor instanceof SupervisorProxy && ((SupervisorProxy) supervisor).isDirty()) {
+        if (supervisor instanceof SupervisorProxy && !((SupervisorProxy) supervisor).isDirty()) {
           return;
         }
         updateSupervisor.setString(1, supervisor.getFirstName());
@@ -144,6 +148,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public Supervisor getSupervisorByID (int id) throws DataException {
+
     try {
       selectSupervisorByID.setInt(1, id);
       try (ResultSet rs = selectSupervisorByID.executeQuery()) {
@@ -173,6 +178,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public void deleteSupervisor (int id) throws DataException {
+
     try {
       deleteSupervisorByID.setInt(1, id);
       deleteSupervisorByID.executeUpdate();

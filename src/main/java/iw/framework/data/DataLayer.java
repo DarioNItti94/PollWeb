@@ -33,7 +33,7 @@ public class DataLayer implements AutoCloseable {
   }
 
   public void init () throws DataException {
-    //call registerDAO on your own DAOs
+    // call registerDAO on your own DAOs
   }
 
   public void destroy () {

@@ -26,6 +26,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -43,6 +44,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -65,6 +67,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
 
   @Override
   public QuestionProxy createQuestionFromRS (ResultSet rs) throws DataException {
+
     try {
       QuestionProxy question = createQuestion();
 
@@ -137,6 +140,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
 
   @Override
   public Question getQuestionByID (int id) throws DataException {
+
     try {
       selectQuestionByID.setInt(1, id);
       try (ResultSet rs = selectQuestionByID.executeQuery()) {
@@ -183,6 +187,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
 
   @Override
   public void deleteQuestion (int id) throws DataException {
+
     try {
       deleteQuestion.setInt(1, id);
       deleteQuestion.executeUpdate();

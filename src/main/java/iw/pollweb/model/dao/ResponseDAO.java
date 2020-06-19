@@ -18,13 +18,19 @@ public interface ResponseDAO {
 
   // Utility
   Response createResponse ();
+
   Response createResponseFromRS (ResultSet rs) throws DataException;
 
   // CRUD
   void storeResponse (Response response) throws DataException;
+
   Response getResponseByID (int id) throws DataException;
+
   List<Response> getResponsesByParticipant (Participant participant) throws DataException;
+
   List<Response> getResponsesBySubmission (Submission submission) throws DataException;
+
   List<Response> getResponsesByQuestion (Question question) throws DataException;
+
   void deleteResponse (int id) throws DataException;
 }

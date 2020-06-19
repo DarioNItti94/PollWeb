@@ -26,6 +26,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
 
   @Override
   public void init () throws DataException {
+
     try {
       super.init();
       // Precompilo le query
@@ -43,6 +44,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -65,6 +67,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
 
   @Override
   public ChoiceProxy createChoiceFromRS (ResultSet rs) throws DataException {
+
     try {
       ChoiceProxy choice = createChoice();
 
@@ -130,6 +133,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
 
   @Override
   public Choice getChoiceByID (int id) throws DataException {
+
     try {
       selectChoiceByID.setInt(1, id);
       try (ResultSet rs = selectChoiceByID.executeQuery()) {
@@ -176,6 +180,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
 
   @Override
   public void deleteChoice (int id) throws DataException {
+
     try {
       deleteChoice.setInt(1, id);
       deleteChoice.executeUpdate();
