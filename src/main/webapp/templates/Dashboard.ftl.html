@@ -1,14 +1,14 @@
 <button style="margin-top:6px" type="button" class="btn btn-secondary cazzo" data-toggle="modal" data-target="#firstModal">
     Crea sondaggio
   </button>
-<button style="margin-top:6px" type="button" class="btn btn-secondary cazzo" data-toggle="modal" data-target="#firstModal">
+<button style="margin-top:6px" type="button" class="btn btn-secondary cazzo" data-toggle="modal" data-target="#secondModal">
     Crea supervisore
   </button>  
 <#if (surveys?size>0)>
             <#list surveys as survey>
-                <a href="/PollWeb/survey?id=${survey.ID}">
+                <a href="/PollWeb/actionsurvey?id=${survey.ID}">
                     <div class="row">
-                        <button class="btn btn-light sondaggio col-md-12" onClick="">
+                        <button class="btn btn-light sondaggio col-md-12" name="">
                             ${survey.title}
                             ${survey.openingText}
                             ${survey.closingText}
@@ -28,40 +28,70 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="creazione_domande.html" method="post">
+                        <form action="/PollWeb/profile" method="post">
                             <div class="form-group">
                                 <label for="FormControlInput1">Titolo</label>
                                 <input name="title" type="text" class="form-control" id="FormControlInput1" required>
                             </div>
-                            <#if logged = "admin">
                             <div class="form-group">
-                                <label for="FormControlInput2">Inserisci supervisori</label>
-                                <input name="supervisorID" type="text" class="form-control" id="FormControlInput2">
+                                <label for="FormControlSup">Numero di supervisori</label>
+                                <input name="supervisors" type="text" class="form-control" id="FormControlSup">
                             </div>
-                            </#if>
+                            <div class="form-group">
+                                <label for="FormControlPart">Numero di partecipanti</label>
+                                <input name="participants" type="text" class="form-control" id="FormControlPart">
+                            </div>
+                            <!--div class="form-group">
+                                <label for="FormControlInput2">Id supervisore</label>
+                                <input name="supervisor" type="text" class="form-control" id="FormControlInput2">
+                            </div-->
                             <div class="form-group">
                                 <label for="FormControlTextarea1">Testo di apertura</label>
-                                <textarea name="openingText" class="form-control" id="FormControlTextarea1" rows="3"></textarea>
+                                <textarea name="opening_text" class="form-control" id="FormControlTextarea1" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="FormControlTextarea2">Testo di chiusura</label>
-                                <textarea name="closingText" class="form-control" id="FormControlTextarea2" rows="3"></textarea>
+                                <textarea name="closing_text" class="form-control" id="FormControlTextarea2" rows="3"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="FormControlSelect1">Numero di domande</label>
-                                <select class="form-control" id="FormControlSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                                <label for="FormControlInput3">Numero di domande</label>
+                                <input name="questions" type="text" class="form-control" id="FormControlInput3">
                             </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <input type="submit" value="Crea" name="create" class="btn btn-primary">
+                            <input type="submit" value="Crea" name="create" class="btn btn-primary">
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <button class="btn btn-primary" data-toggle="modal">Avanti</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="secondModal" tabindex="-1" role="dialog" aria-labelledby="SecondModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="SecondModalLongTitle">Crea supervisore</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/PollWeb/profile" method="post">
+                            <div class="form-group">
+                                <label for="FormControlInput1">Nome supervisore</label>
+                                <input name="firstName" type="text" class="form-control" id="FormControlInput1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlPart">Cogome supervisore</label>
+                                <input name="lastName" type="text" class="form-control" id="FormControlPart">
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlInputSup">E-mail supervisore</label>
+                                <input name="email" type="text" class="form-control" id="FormControlSup">
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <input type="submit" value="Crea" name="super" class="btn btn-primary">
+                        </form>
                     </div>
                 </div>
             </div>

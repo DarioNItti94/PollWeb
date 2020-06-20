@@ -14,6 +14,7 @@ import iw.framework.utils.EmailSender;
 import iw.framework.utils.PasswordUtility;
 import iw.pollweb.model.PollWebDataLayer;
 import iw.pollweb.model.dto.Participant;
+import iw.pollweb.model.dto.Question;
 import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
@@ -38,15 +39,17 @@ public class ActionOnSurvey extends BaseController {
         int SurveyID = SecurityLayer.checkNumeric(request.getParameter("id"));
         Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(SurveyID);
         request.setAttribute("survey", survey);
+        List<Question> questions = ((PollWebDataLayer)request.getAttribute("datalayer")).getQuestionDAO().getQuestionsBySurvey(survey);
+        request.setAttribute("questions", questions);
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("split_shalshes", new SplitSlashesFmkExt());
         request.setAttribute("page_title", "login");
         res.activate("/modifica-sondaggio.ftl.html", request, response);
-       
+
     }
 
     private void action_delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DataException {
-        int surveyID = SecurityLayer.checkNumeric(request.getParameter("id"));
+        int surveyID = SecurityLayer.checkNumeric(request.getParameter("pollID"));
         Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(surveyID);
         if (survey != null) {
             ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().deleteSurvey(surveyID);
@@ -57,35 +60,37 @@ public class ActionOnSurvey extends BaseController {
     }
 
     private void action_close(HttpServletRequest request, HttpServletResponse response) throws ServerException, IOException, DataException {
-        int surveyID = SecurityLayer.checkNumeric(request.getParameter("id"));
-        Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(surveyID);
-        if (survey != null) {
-            survey.setActive(false);
-            survey.setClosed(true);
-            response.sendRedirect("profile");
+        Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(Integer.parseInt(request.getParameter("pollID")));
+        if (survey != null) {       
+            survey.setActive(true);
+            ((PollWebDataLayer)request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
+            response.sendRedirect("/PollWeb/profile");
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
+
     }
 
     private void action_deactivate(HttpServletRequest request, HttpServletResponse response) throws ServerException, DataException, IOException {
-        int surveyID = SecurityLayer.checkNumeric(request.getParameter("id"));
-        Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(surveyID);
+        Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(Integer.parseInt(request.getParameter("pollID")));
         if (survey != null) {
-            survey.setActive(false);
-            response.sendRedirect("profile");
+            survey.setClosed(true);
+            ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
+            response.sendRedirect("/PollWeb/profile");
         }
     }
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException {
         try {
-            if (request.getAttribute("create") != null) {
-                action_default(request, response);
-            } else if (request.getAttribute("delete") != null) {
+            if (request.getParameter("deactivate") != null) {
+                action_deactivate(request, response);
+            } else if (request.getParameter("delete") != null) {
                 action_delete(request, response);
-            } else if (request.getAttribute("close") != null) {
+            } else if (request.getParameter("close") != null) {
                 action_close(request, response);
+            }else{
+                 action_default(request, response);
             }
 
         } catch (Exception e) {

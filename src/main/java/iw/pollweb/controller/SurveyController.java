@@ -14,13 +14,16 @@ import iw.framework.security.SecurityLayer;
 import static iw.framework.security.SecurityLayer.checkSession;
 import iw.pollweb.model.PollWebDataLayer;
 import iw.pollweb.model.dto.Question;
+import iw.pollweb.model.dto.Response;
 import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
 import java.rmi.ServerException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,26 +46,31 @@ public class SurveyController extends BaseController {
 
     }
 
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws ServletException, TemplateManagerException, DataException {
+        HttpSession session = checkSession(request);
+        Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(parseInt(request.getParameter("id")));
+        if (survey.isClosed()) {
+            request.setAttribute("message", "questo sondaggio è chiuso");
+            action_error(request, response);
+        } else {
+            request.setAttribute("page_title", "survey");
+            request.setAttribute("strip_slashes", new SplitSlashesFmkExt());
+            List<Question> questions = ((PollWebDataLayer) request.getAttribute("datalayer")).getQuestionDAO().getQuestionsBySurvey(survey);
+            TemplateResult res = new TemplateResult(getServletContext());
+            res.activate("/sondaggio.ftl.html", request, response);
+            request.setAttribute("questions", questions);
+            request.setAttribute("survey", survey);
+            List<Response> responses = new ArrayList<Response>();
+            ListIterator<Question> listIterator = questions.listIterator();
+            boolean isValid = true;
+            //while(){
+        }
+            
+
+    }
+
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        try {
-            Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(parseInt(request.getParameter("id")));
-            if (survey.isClosed()) {
-                request.setAttribute("message", "questo sondaggio è chiuso");
-                action_error(request, response);
-            } else {
-                request.setAttribute("page_title", "survey");
-                request.setAttribute("strip_slashes", new SplitSlashesFmkExt());
-                List<Question> questions = ((PollWebDataLayer) request.getAttribute("datalayer")).getQuestionDAO().getQuestionsBySurvey(survey);
-                TemplateResult res = new TemplateResult(getServletContext());
-                res.activate("/sondaggio.ftl.html", request, response);
-                request.setAttribute("questions", questions);
-                request.setAttribute("survey", survey);
-            }
-        } catch (DataException | TemplateManagerException ex) {
-            ex.printStackTrace();
-            System.err.println(ex);
-        }
     }
 
     @Override
