@@ -1,15 +1,17 @@
           
 <#if (surveys?size>0)>
-            <#list surveys as survey>
-                <a href="/PollWeb/survey?id=${survey.ID}">
-                    <div class="row">
-                        <button class="btn btn-light sondaggio col-md-12" onClick="">
-                            ${survey.title}
-                            ${survey.openingText}
-                            ${survey.closingText}
-                        </button>
-                    </div>
-                </a>
-            </#list>
-        </#if>
+
+    <#list surveys as survey>
     
+        <div class="row">
+            <a href="/PollWeb/CreateSurvey?id=${survey.ID}" class="btn btn-light sondaggio col-md-12">
+                ${survey.title}
+                ${survey.openingText}
+                ${survey.closingText}
+            </a>
+        </div>
+    
+    </#list>
+    
+</#if>
+

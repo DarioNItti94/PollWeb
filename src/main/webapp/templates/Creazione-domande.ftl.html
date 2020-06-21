@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<h5 style="margin-top:10px" class="card-title">Crea partecipante</h5>
+<form action="/PollWeb/CreateSurvey" method="post">
+    <input name="pollID" value="${survey.ID}" hidden>
+
+    <div class="form-group">
+        <label for="FormControlInput1">Nome Partecipante</label>
+        <input name="firstName" type="text" class="form-control classePart" id="FormControlInput1" required>
+    </div>
+
+    <div class="form-group">
+        <label for="FormControlPart">Cogome Partecipante</label>
+        <input name="lastName" type="text" class="form-control classePart" id="FormControlPart">
+    </div>
+
+    <div class="form-group">
+        <label for="FormControlInputSup">E-mail Partecipante</label>
+        <input name="email" type="text" class="form-control classePart" id="FormControlSup">
+    </div>
+
+
+    <input type="submit" value="Invita" name="addpart" class="btn btn-primary" onclick="document.getElementsByClassName('classePart').value = ''">
+
+</form>
+
+        <h5 class="card-title">Crea domanda</h5>
+            <form action="/PollWeb/CreateSurvey" method="post">
+            <input name="pollID" value="${survey.ID}" hidden>
+            <div class="form-group">
+                <input name="type" type="text" placeholder="Tipo domanda" class="form-control">
+            </div>
+            <div class="form-group">
+                <input name="text" type="text" placeholder="Testo domanda" class="form-control"
+                        >
+            </div>
+            <div class="form-group">
+                <input name="note" value="Nota domanda" placeholder="Note Domanda" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <input name="number" placeholder="Numero domanda" type="text" class="form-control">
+            </div>
+            <div class="form-check">
+                <input name="isMandatory" type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Obbligatoria</label>
+            </div>
+            <input type="submit" value="Crea" name="question" class="btn btn-primary">
+        </form>

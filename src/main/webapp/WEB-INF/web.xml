@@ -100,7 +100,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateSurvey</servlet-name>
-        <url-pattern>/createsurvey</url-pattern>
+        <url-pattern>/CreateSurvey</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

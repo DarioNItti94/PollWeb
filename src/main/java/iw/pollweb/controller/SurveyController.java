@@ -71,6 +71,7 @@ public class SurveyController extends BaseController {
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        //action_default(request, response);
     }
 
     @Override

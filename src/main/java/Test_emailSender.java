@@ -18,8 +18,9 @@ public class Test_emailSender {
         String email ="dario.nitti@outlook.it";
         String Fname = "Dario";
         String Lname = "Nitti";
+        String password = PasswordUtility.generateRandomPassword();
        String mittente = "pollweb2020@gmail.com";
-       String password = PasswordUtility.generateRandomPassword();
+       
         String pass = "We_PollWeb_2020";
         String obj = "C'è un sonadggio per te";
         String url = "http://localhost:8080/PollWeb/login";

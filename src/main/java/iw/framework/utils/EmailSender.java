@@ -38,7 +38,7 @@ public class EmailSender {
             message.setText(msg);
             //send message
             Transport.send(message);
-            System.err.println("messaggio inviato correttamente");
+            System.out.println("messaggio inviato correttamente");
         } catch (MessagingException ex) {
             throw new RuntimeException(ex);
         }

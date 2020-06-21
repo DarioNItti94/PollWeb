@@ -98,10 +98,11 @@ public class Profile extends BaseController {
             survey.setReserved(isreserved);
             survey.setQuestions(questionsList);
             survey.setParticipants(participantsList);
+           
             Supervisor supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID(idsup);
             survey.setSupervisor(supervisor);
             ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
-            response.sendRedirect("/PollWeb/createsurvey?id=" + survey.getID());
+            response.sendRedirect("/PollWeb/CreateSurvey?id=" + survey.getID());
         } else {
             throw new ServletException("inserisci i parametri");
         }
@@ -119,44 +120,18 @@ public class Profile extends BaseController {
             supervisor.setLastName(LName);
             supervisor.setEmail(email);
             supervisor.setHashedPassword(PasswordUtility.getSHA256(password));
+            String mittente = "pollweb2020@gmail.com";
+            String pass = "We_PollWeb_2020";
+            String obj = "sei Diventato supervisore";
+            String url = "http://localhost:8080/PollWeb/login";
+            String testo = "Ciao " + FName + " " + LName + "\n"
+                    + "Sei stato invitato ad essere un supervisore della nostra piattaforma le tue credenziali sono: \n\n" + "Email:  " + email + "\n" + "password:  " + password + "\n" + "clicca qui per accedere al sondaggio: " + url;
+            EmailSender.send(mittente, pass, email, obj, testo);
             ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().storeSupervisor(supervisor);
             response.sendRedirect("/PollWeb/profile");
         } else {
             throw new ServletException("inserisci i parametri");
         }
-    }
-
-    private void action_addPart(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws ServletException, DataException, IOException {
-        //prendo il sondaggio appena creato attraverso il suo id
-        Survey currentSurvey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID((int) s.getAttribute("userid"));
-
-        String Fname = request.getParameter("Fname");
-        String Lname = request.getParameter("Lname");
-        String Email = request.getParameter("email");
-        String password = PasswordUtility.generateRandomPassword();
-        //creo un nuovo partecipante
-        Participant participant = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().createParticipant();
-        //setto i valori nel database
-        participant.setFirstName(Fname);
-        participant.setLastName(Lname);
-        participant.setEmail(Email);
-        participant.setHashedPassword(password);
-        participant.setSurvey(currentSurvey);
-        List<Participant> participants = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().getParticipants();
-        ListIterator<Participant> pIterator = participants.listIterator();
-
-        while (pIterator.hasNext()) {
-            String email = pIterator.next().getEmail();
-            //dopo aver settato tutte le variabili del DTO vado ad inviare la mail
-            String mittente = "pollweb2020@gmail.com";
-            String pass = "We_PollWeb_2020";
-            String obj = "C'è un sonadggio per te";
-            String url = "http://localhost:8080/PollWeb/login";
-            String testo = "Ciao ,Sei stato invitato ad un nuovo sondaggio le tue credenziali sono: \n\n" + "Email:  " + email + "\n" + "password:  " + password + "\n" + "clicca qui per accedere al sondaggio: " + url;
-            EmailSender.send(mittente, pass, email, obj, testo);
-        }
-
-        response.sendRedirect("/modifysurvey?survey");
     }
 
     @Override
@@ -165,8 +140,6 @@ public class Profile extends BaseController {
             HttpSession s = checkSession(request);
             if (request.getParameter("create") != null) {
                 action_create(request, response);
-            } else if (request.getParameter("addPart") != null) {
-                action_addPart(request, response, s);
             } else if (request.getParameter("super") != null) {
                 action_create_sup(request, response);
             } else {

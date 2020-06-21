@@ -5,10 +5,6 @@
  */
 package iw.pollweb.controller;
 
-
-
-
-
 import iw.framework.data.DataException;
 import iw.framework.result.FailureResult;
 import iw.pollweb.model.PollWebDataLayer;
@@ -25,8 +21,10 @@ import javax.sql.DataSource;
  * @author dario
  */
 public abstract class BaseController extends HttpServlet {
-@Resource(name="jdbc/pollwebdb")
+
+    @Resource(name = "jdbc/pollwebdb")
     private DataSource dataSource;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,13 +34,13 @@ public abstract class BaseController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- protected abstract void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException;
+    protected abstract void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException;
 
     private void processBaseRequest(HttpServletRequest request, HttpServletResponse response) {
         try (PollWebDataLayer dataLayer = new PollWebDataLayer(dataSource)) {
             dataLayer.init();
             request.setAttribute("datalayer", dataLayer);
-            processRequest(request, response); 
+            processRequest(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
             request.setAttribute("message", "Errore Interna");
@@ -56,15 +54,15 @@ public abstract class BaseController extends HttpServlet {
         processBaseRequest(request, response);
     }
 
-@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processBaseRequest(request, response);
     }
 
     protected void action_error(HttpServletRequest request, HttpServletResponse response) {
-        if( request.getAttribute("exception") != null){
+        if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
-        }else{
+        } else {
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }

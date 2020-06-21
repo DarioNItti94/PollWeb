@@ -18,9 +18,9 @@ iw\pollweb\model\dto\proxy\SurveyProxy.class
 iw\pollweb\model\dao\SupervisorDAO.class
 iw\framework\result\HTMLResult.class
 iw\framework\result\SplitSlashesFmkExt.class
-iw\pollweb\controller\SupervisorControl.class
 iw\framework\result\DataModelFiller.class
 iw\pollweb\model\dao\SubmissionDAO.class
+iw\pollweb\controller\CreateSurvey.class
 iw\pollweb\model\PollWebDataLayer.class
 iw\pollweb\model\dto\Choice.class
 iw\pollweb\model\dao\AdminDAO.class
