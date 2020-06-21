@@ -88,11 +88,33 @@ public class CreateSurvey extends BaseController {
         Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(surveyID);
         Question question;
         question = ((PollWebDataLayer) request.getAttribute("datalayer")).getQuestionDAO().createQuestion();
-
-        String type = request.getParameter("type");
+        String type = "";
+        String typeFront = request.getParameter("type");
+        switch(typeFront){
+            case "Lunga":
+                type = "long";
+                break;
+            case "Corta":
+                type = "short";
+                break;
+            case "Data":
+                type = "date";
+                break;
+            case "Numero":
+                type = "number";
+                break;
+            case "Aperta con scelta singola":
+                type = "single";
+                break;
+            case "Aperta con scelta multipla":
+                type = "multiple";
+                break;
+        }
         String text = request.getParameter("text");
         String note = request.getParameter("note");
-        boolean mandatory = Boolean.parseBoolean(request.getParameter("mandatory"));
+        //boolean mandatory = request.getParameter("mandatory") != null;
+
+        boolean mandatory = request.getParameter("isMandatory")!= null;
         int number = Integer.parseInt(request.getParameter("number"));
         if (type != null && text != null) {
             question.setType(type);
@@ -102,7 +124,7 @@ public class CreateSurvey extends BaseController {
             question.setMandatory(mandatory);
             question.setNumber(number);
             question.setSurvey(survey);
-            if (question.getType() == "multiple" || question.getType() == "single") {
+            if (type == "multiple" || type == "single") {
                 Choice choice1;
                 Choice choice2;
                 Choice choice3;
@@ -114,10 +136,10 @@ public class CreateSurvey extends BaseController {
                 String choiceValue2 = request.getParameter("value2");
                 String choiceValue3 = request.getParameter("value3");
                 
-                int ChoiceNumber1 = Integer.parseInt(request.getParameter("number1"));
-                int ChoiceNumber2 = Integer.parseInt(request.getParameter("number2"));
-                int ChoiceNumber3 = Integer.parseInt(request.getParameter("number3"));
-                
+                int ChoiceNumber1 = 1;
+                int ChoiceNumber2 = 2;
+                int ChoiceNumber3 = 3;
+                if( choice1 != null && choice2 != null && choice3 != null){
                 choice1.setValue(choiceValue1);
                 choice1.setNumber(ChoiceNumber1);
                 choice2.setValue(choiceValue2);
@@ -130,12 +152,16 @@ public class CreateSurvey extends BaseController {
                 choicesList.add(choice1);
                 choicesList.add(choice2);
                 choicesList.add(choice3);
-
-                question.setChoices(choicesList);
+                
+                choice1.setQuestion(question);
+                choice2.setQuestion(question);
+                choice3.setQuestion(question);
+             
                 ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().storeChoice(choice1);
                 ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().storeChoice(choice2);
                 ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().storeChoice(choice3);
-
+                question.setChoices(choicesList);
+                }
             }
             response.sendRedirect("/PollWeb/CreateSurvey?id=" + survey.getID());
 
