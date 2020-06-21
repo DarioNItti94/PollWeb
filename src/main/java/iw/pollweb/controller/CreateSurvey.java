@@ -112,9 +112,9 @@ public class CreateSurvey extends BaseController {
         }
         String text = request.getParameter("text");
         String note = request.getParameter("note");
-        //boolean mandatory = request.getParameter("mandatory") != null;
 
         boolean mandatory = request.getParameter("isMandatory")!= null;
+//        boolean private = request.getParameter("isPrivate")!= null;
         int number = Integer.parseInt(request.getParameter("number"));
         if (type != null && text != null) {
             question.setType(type);
