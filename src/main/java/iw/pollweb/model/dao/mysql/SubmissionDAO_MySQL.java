@@ -91,11 +91,12 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
     int id = submission.getID();
 
     try {
-      if (submission.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (submission.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (submission instanceof SubmissionProxy && !((SubmissionProxy) submission).isDirty()) {
           return;
         }
+        // UPDATE submission SET surveyID=?, participantID=? WHERE id=?
         if (submission.getSurvey() != null) {
           updateSubmission.setInt(1, submission.getSurvey().getID());
         } else {
@@ -108,7 +109,9 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
         }
         updateSubmission.setInt(3, submission.getID());
         updateSubmission.executeUpdate();
-      } else { // INSERT
+
+      } else {
+        // INSERT INTO submission (surveyID, participantID) VALUES (?, ?)
         if (submission.getSurvey() != null) {
           insertSubmission.setInt(1, submission.getSurvey().getID());
         } else {
@@ -142,6 +145,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
   @Override
   public Submission getSubmissionByID (int id) throws DataException {
 
+    // SELECT * FROM submission WHERE id=?
     try {
       selectSubmissionByID.setInt(1, id);
       try (ResultSet rs = selectSubmissionByID.executeQuery()) {
@@ -158,6 +162,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
   @Override
   public Submission getSubmissionByParticipant (Participant participant) throws DataException {
 
+    // SELECT * FROM submission WHERE participantID=?
     try {
       selectSubmissionByParticipant.setInt(1, participant.getID());
       try (ResultSet rs = selectSubmissionByParticipant.executeQuery()) {
@@ -175,6 +180,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
   public List<Submission> getSubmissions () throws DataException {
     List<Submission> submissions = new ArrayList<>();
 
+    // SELECT id FROM submission
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         submissions.add(getSubmissionByID(rs.getInt("id")));
@@ -189,6 +195,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
   public List<Submission> getSubmissionsBySurvey (Survey survey) throws DataException {
     List<Submission> submissions = new ArrayList<>();
 
+    // SELECT * FROM submission WHERE surveyID=?
     try {
       selectSubmissionsBySurvey.setInt(1, survey.getID());
       try (ResultSet rs = selectSubmissionsBySurvey.executeQuery()) {
@@ -205,6 +212,7 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
   @Override
   public void deleteSubmission (int id) throws DataException {
 
+    // DELETE FROM submission WHERE id=?
     try {
       deleteSubmission.setInt(1, id);
       deleteSubmission.executeUpdate();

@@ -16,19 +16,13 @@ public interface ParticipantDAO {
 
   // Utility
   Participant createParticipant ();
-
   Participant createParticipantFromRS (ResultSet rs) throws DataException;
-
   int authenticateParticipant (Participant participant) throws DataException;
 
   // CRUD
   void storeParticipant (Participant participant) throws DataException;
-
   Participant getParticipantByID (int id) throws DataException;
-
   List<Participant> getParticipants () throws DataException;
-
   List<Participant> getParticipantsBySurvey (Survey survey) throws DataException;
-
   void deleteParticipant (int id) throws DataException;
 }

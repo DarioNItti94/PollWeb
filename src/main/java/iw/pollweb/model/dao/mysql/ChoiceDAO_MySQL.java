@@ -88,11 +88,12 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
     int id = choice.getID();
 
     try {
-      if (choice.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (choice.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (choice instanceof ChoiceProxy && !((ChoiceProxy) choice).isDirty()) {
           return;
         }
+        // UPDATE choice SET value=?, number=?, questionID=? WHERE id=?
         updateChoice.setString(1, choice.getValue());
         updateChoice.setInt(2, choice.getNumber());
         if (choice.getQuestion() != null) {
@@ -103,7 +104,8 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
         updateChoice.setInt(4, choice.getID());
         updateChoice.executeUpdate();
 
-      } else { // INSERT
+      } else {
+        // INSERT INTO choice (value, number, questionID) VALUES (?, ?, ?)
         insertChoice.setString(1, choice.getValue());
         insertChoice.setInt(2, choice.getNumber());
         if (choice.getQuestion() != null) {
@@ -134,6 +136,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
   @Override
   public Choice getChoiceByID (int id) throws DataException {
 
+    // SELECT * FROM choice WHERE id=?
     try {
       selectChoiceByID.setInt(1, id);
       try (ResultSet rs = selectChoiceByID.executeQuery()) {
@@ -151,6 +154,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
   public List<Choice> getChoices () throws DataException {
     List<Choice> choices = new ArrayList<>();
 
+    // SELECT id FROM choice
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         choices.add(getChoiceByID(rs.getInt("id")));
@@ -165,6 +169,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
   public List<Choice> getChoicesByQuestion (Question question) throws DataException {
     List<Choice> choices = new ArrayList<>();
 
+    // SELECT * FROM choice WHERE questionID=?
     try {
       selectChoicesByQuestion.setInt(1, question.getID());
       try (ResultSet rs = selectChoicesByQuestion.executeQuery()) {
@@ -181,6 +186,7 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
   @Override
   public void deleteChoice (int id) throws DataException {
 
+    // DELETE FROM choice WHERE id=?
     try {
       deleteChoice.setInt(1, id);
       deleteChoice.executeUpdate();

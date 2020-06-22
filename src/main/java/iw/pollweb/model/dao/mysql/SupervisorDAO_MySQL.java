@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorDAO {
-  private PreparedStatement getIDs, selectSupervisorByID, selectSupervisorByEmailPassword, insertSupervisor, updateSupervisor, deleteSupervisorByID;
+  private PreparedStatement getIDs, selectSupervisorByID, selectSupervisorByEmail, selectSupervisorByEmailPassword, insertSupervisor, updateSupervisor, deleteSupervisorByID;
 
   public SupervisorDAO_MySQL (DataLayer dataLayer) {
     super(dataLayer);
@@ -34,6 +34,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
       // Precompilo le query
       getIDs = connection.prepareStatement("SELECT id FROM supervisor");
       selectSupervisorByID = connection.prepareStatement("SELECT * FROM supervisor WHERE id=?");
+      selectSupervisorByEmail = connection.prepareStatement("SELECT * FROM supervisor WHERE email=?");
       selectSupervisorByEmailPassword = connection.prepareStatement("SELECT * FROM supervisor WHERE email=? AND hashedPassword=?");
       insertSupervisor = connection.prepareStatement("INSERT INTO supervisor (firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
       updateSupervisor = connection.prepareStatement("UPDATE supervisor set firstName=?, lastName=?, email=?, hashedPassword=? WHERE id=?");
@@ -51,6 +52,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
     try {
       getIDs.close();
       selectSupervisorByID.close();
+      selectSupervisorByEmail.close();
       selectSupervisorByEmailPassword.close();
       insertSupervisor.close();
       updateSupervisor.close();
@@ -89,6 +91,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
   @Override
   public int authenticateSupervisor (Supervisor supervisor) throws DataException {
 
+    // SELECT * FROM supervisor WHERE email=? AND hashedPassword=?
     try {
       selectSupervisorByEmailPassword.setString(1, supervisor.getEmail());
       selectSupervisorByEmailPassword.setString(2, supervisor.getHashedPassword());
@@ -109,22 +112,25 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
     int id = supervisor.getID();
 
     try {
-      if (supervisor.getID() > 0) { //UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (supervisor.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (supervisor instanceof SupervisorProxy && !((SupervisorProxy) supervisor).isDirty()) {
           return;
         }
+        // UPDATE supervisor set firstName=?, lastName=?, email=?, hashedPassword=? WHERE id=?
         updateSupervisor.setString(1, supervisor.getFirstName());
         updateSupervisor.setString(2, supervisor.getLastName());
         updateSupervisor.setString(3, supervisor.getEmail());
         updateSupervisor.setString(4, supervisor.getHashedPassword());
+        updateSupervisor.setInt(5, supervisor.getID());
         updateSupervisor.executeUpdate();
-      } else { //INSERT
+
+      } else {
+        // INSERT INTO supervisor (firstName, lastName, email, hashedPassword) VALUES (?, ?, ?, ?)
         insertSupervisor.setString(1, supervisor.getFirstName());
         insertSupervisor.setString(2, supervisor.getLastName());
         insertSupervisor.setString(3, supervisor.getEmail());
         insertSupervisor.setString(4, supervisor.getHashedPassword());
-
         if (insertSupervisor.executeUpdate() == 1) {
           // Leggo la chiave generata dal DB per la precedente INSERT
           try (ResultSet rs = insertSupervisor.getGeneratedKeys()) {
@@ -149,9 +155,26 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
   @Override
   public Supervisor getSupervisorByID (int id) throws DataException {
 
+    // SELECT * FROM supervisor WHERE id=?
     try {
       selectSupervisorByID.setInt(1, id);
       try (ResultSet rs = selectSupervisorByID.executeQuery()) {
+        if (rs.next()) {
+          return createSupervisorFromRS(rs);
+        }
+      }
+    } catch (SQLException e) {
+      throw new DataException("Errore caricamento Supervisor", e);
+    }
+    return null;
+  }
+
+  public Supervisor getSupervisorByEmail (String email) throws DataException {
+
+    // SELECT * FROM supervisor WHERE email=?
+    try {
+      selectSupervisorByEmail.setString(1, email);
+      try (ResultSet rs = selectSupervisorByEmail.executeQuery()) {
         if (rs.next()) {
           return createSupervisorFromRS(rs);
         }
@@ -166,6 +189,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
   public List<Supervisor> getSupervisors () throws DataException {
     List<Supervisor> supervisors = new ArrayList<>();
 
+    // SELECT id FROM supervisor
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         supervisors.add(getSupervisorByID(rs.getInt("id")));
@@ -179,6 +203,7 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
   @Override
   public void deleteSupervisor (int id) throws DataException {
 
+    // DELETE FROM supervisor WHERE id=?
     try {
       deleteSupervisorByID.setInt(1, id);
       deleteSupervisorByID.executeUpdate();

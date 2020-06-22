@@ -98,11 +98,12 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
     int id = response.getID();
 
     try {
-      if (response.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (response.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (response instanceof ResponseProxy && !((ResponseProxy) response).isDirty()) {
           return;
         }
+        // UPDATE response SET value=?, questionID=?, participantID=?, submissionID=? WHERE id=?
         updateResponse.setString(1, response.getValue());
         if (response.getQuestion() != null) {
           updateResponse.setInt(2, response.getQuestion().getID());
@@ -122,7 +123,8 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
         updateResponse.setInt(5, response.getID());
         updateResponse.executeUpdate();
 
-      } else { // INSERT
+      } else {
+        // INSERT INTO response (value, questionID, participantID, submissionID) VALUES (?, ?, ?, ?)
         insertResponse.setString(1, response.getValue());
         if (response.getQuestion() != null) {
           insertResponse.setInt(2, response.getQuestion().getID());
@@ -162,6 +164,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
   @Override
   public Response getResponseByID (int id) throws DataException {
 
+    // SELECT * FROM response WHERE id=?
     try {
       selectResponseByID.setInt(1, id);
       try (ResultSet rs = selectResponseByID.executeQuery()) {
@@ -179,6 +182,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
   public List<Response> getResponsesByParticipant (Participant participant) throws DataException {
     List<Response> responses = new ArrayList<>();
 
+    // SELECT * FROM response WHERE participantID=?
     try {
       selectResponsesByParticipant.setInt(1, participant.getID());
       try (ResultSet rs = selectResponsesByParticipant.executeQuery()) {
@@ -196,6 +200,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
   public List<Response> getResponsesBySubmission (Submission submission) throws DataException {
     List<Response> responses = new ArrayList<>();
 
+    // SELECT * FROM response WHERE submissionID=?
     try {
       selectResponsesBySubmission.setInt(1, submission.getID());
       try (ResultSet rs = selectResponsesBySubmission.executeQuery()) {
@@ -213,6 +218,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
   public List<Response> getResponsesByQuestion (Question question) throws DataException {
     List<Response> responses = new ArrayList<>();
 
+    // SELECT * FROM response where questionID=?
     try {
       selectResponsesByQuestion.setInt(1, question.getID());
       try (ResultSet rs = selectResponsesByQuestion.executeQuery()) {
@@ -229,6 +235,7 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
   @Override
   public void deleteResponse (int id) throws DataException {
 
+    // DELETE FROM response WHERE id=?
     try {
       deleteResponse.setInt(1, id);
       deleteResponse.executeUpdate();

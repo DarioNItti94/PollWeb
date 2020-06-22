@@ -16,17 +16,12 @@ public interface ChoiceDAO {
 
   // Utility
   Choice createChoice ();
-
   Choice createChoiceFromRS (ResultSet rs) throws DataException;
 
   // CRUD
   void storeChoice (Choice choice) throws DataException;
-
   Choice getChoiceByID (int id) throws DataException;
-
   List<Choice> getChoices () throws DataException;
-
   List<Choice> getChoicesByQuestion (Question question) throws DataException;
-
   void deleteChoice (int id) throws DataException;
 }

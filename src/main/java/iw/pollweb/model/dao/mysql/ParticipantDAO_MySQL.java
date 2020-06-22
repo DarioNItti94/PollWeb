@@ -32,7 +32,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
       // Precompilo le query
       getIDs = connection.prepareStatement("SELECT id FROM participant");
       selectParticipantByID = connection.prepareStatement("SELECT * FROM participant WHERE id=?");
-      selectParticipantByEmailPassword = connection.prepareStatement("SELECT * FROM participant WHERE email=? AND hashedPassword=? AND isDisabled=0 ");
+      selectParticipantByEmailPassword = connection.prepareStatement("SELECT * FROM participant WHERE email=? AND hashedPassword=? AND isDisabled=0");
       selectParticipantBySurvey = connection.prepareStatement("SELECT * FROM participant WHERE surveyID=?");
       insertParticipant = connection.prepareStatement("INSERT INTO participant (firstName, lastName, email, hashedPassword, isDisabled, surveyID) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
       updateParticipant = connection.prepareStatement("UPDATE participant SET firstName=?, lastName=?, email=?, hashedPassword=?, isDisabled=?, surveyID=? WHERE id=?");
@@ -91,6 +91,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
   @Override
   public int authenticateParticipant (Participant participant) throws DataException {
 
+    // SELECT * FROM participant WHERE email=? AND hashedPassword=? AND isDisabled=0
     try {
       selectParticipantByEmailPassword.setString(1, participant.getEmail());
       selectParticipantByEmailPassword.setString(2, participant.getHashedPassword());
@@ -111,11 +112,12 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
     int id = participant.getID();
 
     try {
-      if (participant.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (participant.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (participant instanceof ParticipantProxy && !((ParticipantProxy) participant).isDirty()) {
           return;
         }
+        // UPDATE participant SET firstName=?, lastName=?, email=?, hashedPassword=?, isDisabled=?, surveyID=? WHERE id=?
         updateParticipant.setString(1, participant.getFirstName());
         updateParticipant.setString(2, participant.getLastName());
         updateParticipant.setString(3, participant.getEmail());
@@ -128,7 +130,9 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
         }
         updateParticipant.setInt(7, participant.getID());
         updateParticipant.executeUpdate();
-      } else { // INSERT
+
+      } else {
+        // INSERT INTO participant (firstName, lastName, email, hashedPassword, isDisabled, surveyID) VALUES (?, ?, ?, ?, ?, ?)
         insertParticipant.setString(1, participant.getFirstName());
         insertParticipant.setString(2, participant.getLastName());
         insertParticipant.setString(3, participant.getEmail());
@@ -162,6 +166,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
   @Override
   public Participant getParticipantByID (int id) throws DataException {
 
+    // SELECT * FROM participant WHERE id=?
     try {
       selectParticipantByID.setInt(1, id);
       try (ResultSet rs = selectParticipantByID.executeQuery()) {
@@ -179,6 +184,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
   public List<Participant> getParticipants () throws DataException {
     List<Participant> participants = new ArrayList<>();
 
+    // SELECT id FROM participant
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         participants.add(getParticipantByID(rs.getInt("id")));
@@ -193,6 +199,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
   public List<Participant> getParticipantsBySurvey (Survey survey) throws DataException {
     List<Participant> participants = new ArrayList<>();
 
+    // SELECT * FROM participant WHERE surveyID=?
     try {
       selectParticipantBySurvey.setInt(1, survey.getID());
       try (ResultSet rs = selectParticipantBySurvey.executeQuery()) {
@@ -209,6 +216,7 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
   @Override
   public void deleteParticipant (int id) throws DataException {
 
+    // DELETE FROM participant WHERE id=?
     try {
       deleteParticipant.setInt(1, id);
       deleteParticipant.executeUpdate();

@@ -100,12 +100,12 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
     int id = survey.getID();
 
     try {
-      if (survey.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (survey.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (survey instanceof SurveyProxy && !((SurveyProxy) survey).isDirty()) {
           return;
         }
-        // Eseguo l'update
+        // UPDATE survey SET title=?, openingText=?, closingText=?, isReserved=?, isActive=?, isClosed=?, supervisorID=? WHERE id=?
         updateSurvey.setString(1, survey.getTitle());
         updateSurvey.setString(2, survey.getOpeningText());
         updateSurvey.setString(3, survey.getClosingText());
@@ -121,7 +121,8 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
         updateSurvey.setInt(8, survey.getID());
         updateSurvey.executeUpdate();
 
-      } else { // INSERT
+      } else {
+        // INSERT INTO survey (title, openingText, closingText, isReserved, isActive, isClosed, supervisorID) VALUES (?, ?, ?, ?, ?, ?, ?)
         insertSurvey.setString(1, survey.getTitle());
         insertSurvey.setString(2, survey.getOpeningText());
         insertSurvey.setString(3, survey.getClosingText());
@@ -157,6 +158,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   @Override
   public Survey getSurveyByID (int id) throws DataException {
 
+    // SELECT * FROM survey WHERE id=?
     try {
       selectSurveyByID.setInt(1, id);
       try (ResultSet rs = selectSurveyByID.executeQuery()) {
@@ -174,6 +176,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   public List<Survey> getSurveys () throws DataException {
     List<Survey> surveys = new ArrayList<>();
 
+    // SELECT id FROM survey
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         surveys.add(getSurveyByID(rs.getInt("id")));
@@ -188,6 +191,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   public List<Survey> getSurveysBySupervisor (Supervisor supervisor) throws DataException {
     List<Survey> surveys = new ArrayList<>();
 
+    // SELECT * FROM survey WHERE supervisorID=?
     try {
       selectSurveyBySupervisor.setInt(1, supervisor.getID());
 
@@ -206,6 +210,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   public List<Survey> getSurveysByReservation (boolean isReserved) throws DataException {
     List<Survey> surveys = new ArrayList<>();
 
+    // SELECT * FROM survey WHERE isReserved=?
     try {
       selectSurveysByReservation.setBoolean(1, isReserved);
 
@@ -221,27 +226,10 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   }
 
   @Override
-  public List<Survey> getSurveysByVisibilityAndReservation (boolean isActive, boolean isReserved) throws DataException {
-    List<Survey> surveys = new ArrayList<>();
-
-    try {
-      getSelectSurveysByVisibilityAndReservation.setBoolean(1, isActive);
-      getSelectSurveysByVisibilityAndReservation.setBoolean(2, isReserved);
-      try (ResultSet rs = getSelectSurveysByVisibilityAndReservation.executeQuery()) {
-        while (rs.next()) {
-          surveys.add(getSurveyByID(rs.getInt("id")));
-        }
-      }
-    } catch (SQLException e) {
-      throw new DataException("Errore caricamento Survey", e);
-    }
-    return surveys;
-  }
-
-  @Override
   public List<Survey> getSurveysByVisibility (boolean isActive) throws DataException {
     List<Survey> surveys = new ArrayList<>();
 
+    // SELECT * FROM survey WHERE isActive=?
     try {
       selectSurveysByVisibility.setBoolean(1, isActive);
 
@@ -257,9 +245,29 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   }
 
   @Override
+  public List<Survey> getSurveysByVisibilityAndReservation (boolean isReserved, boolean isActive) throws DataException {
+    List<Survey> surveys = new ArrayList<>();
+
+    // SELECT * FROM survey WHERE isReserved=? AND isActive=?
+    try {
+      getSelectSurveysByVisibilityAndReservation.setBoolean(1, isReserved);
+      getSelectSurveysByVisibilityAndReservation.setBoolean(2, isActive);
+      try (ResultSet rs = getSelectSurveysByVisibilityAndReservation.executeQuery()) {
+        while (rs.next()) {
+          surveys.add(getSurveyByID(rs.getInt("id")));
+        }
+      }
+    } catch (SQLException e) {
+      throw new DataException("Errore caricamento Survey", e);
+    }
+    return surveys;
+  }
+
+  @Override
   public List<Survey> getSurveysByStatus (boolean isClosed) throws DataException {
     List<Survey> surveys = new ArrayList<>();
 
+    // SELECT * FROM survey WHERE isClosed=?
     try {
       selectSurveysByStatus.setBoolean(1, isClosed);
 
@@ -277,6 +285,7 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   @Override
   public void deleteSurvey (int id) throws DataException {
 
+    // DELETE FROM survey WHERE id=?
     try {
       deleteSurveyByID.setInt(1, id);
       deleteSurveyByID.executeUpdate();

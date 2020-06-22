@@ -91,11 +91,12 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
     int id = question.getID();
 
     try {
-      if (question.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (question.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (question instanceof QuestionProxy && !((QuestionProxy) question).isDirty()) {
           return;
         }
+        // UPDATE question SET type=?, text=?, note=?, isMandatory=?, number=?, surveyID=? WHERE id=?
         updateQuestion.setString(1, question.getType());
         updateQuestion.setString(2, question.getText());
         updateQuestion.setString(3, question.getNote());
@@ -106,8 +107,11 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
         } else {
           updateQuestion.setNull(6, Types.INTEGER);
         }
+        updateQuestion.setInt(7, question.getID());
         updateQuestion.executeUpdate();
-      } else { // INSERT
+
+      } else {
+        // INSERT INTO question (type, text, note, isMandatory, number, surveyID) VALUES (?, ?, ?, ?, ?, ?)
         insertQuestion.setString(1, question.getType());
         insertQuestion.setString(2, question.getText());
         insertQuestion.setString(3, question.getNote());
@@ -141,6 +145,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
   @Override
   public Question getQuestionByID (int id) throws DataException {
 
+    // SELECT * FROM question WHERE id=?
     try {
       selectQuestionByID.setInt(1, id);
       try (ResultSet rs = selectQuestionByID.executeQuery()) {
@@ -158,6 +163,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
   public List<Question> getQuestions () throws DataException {
     List<Question> questions = new ArrayList<>();
 
+    // SELECT id FROM question
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         questions.add(getQuestionByID(rs.getInt("id")));
@@ -172,6 +178,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
   public List<Question> getQuestionsBySurvey (Survey survey) throws DataException {
     List<Question> questions = new ArrayList<>();
 
+    // SELECT * FROM question WHERE surveyID=?
     try {
       selectQuestionsBySurvey.setInt(1, survey.getID());
       try (ResultSet rs = selectQuestionsBySurvey.executeQuery()) {
@@ -188,6 +195,7 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
   @Override
   public void deleteQuestion (int id) throws DataException {
 
+    // DELETE FROM question WHERE id=?
     try {
       deleteQuestion.setInt(1, id);
       deleteQuestion.executeUpdate();

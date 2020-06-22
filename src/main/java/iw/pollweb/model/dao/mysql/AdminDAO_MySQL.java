@@ -46,6 +46,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
 
   @Override
   public void destroy () throws DataException {
+
     // Chiudo i PreparedStatement
     try {
       getIDs.close();
@@ -86,6 +87,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
   @Override
   public int authenticateAdmin (Admin admin) throws DataException {
 
+    // SELECT * FROM admin WHERE email=? AND hashedPassword=?
     try {
       selectAdminByEmailPassword.setString(1, admin.getEmail());
       selectAdminByEmailPassword.setString(2, admin.getHashedPassword());
@@ -106,17 +108,19 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
     int id = admin.getID();
 
     try {
-      if (admin.getID() > 0) { // UPDATE
-        // Non eseguo operazioni se il proxy non presenta modifiche
+      if (admin.getID() > 0) {
+        // Non eseguo operazioni di aggiornamento se il proxy non presenta modifiche
         if (admin instanceof AdminProxy && !((AdminProxy) admin).isDirty()) {
           return;
         }
-        // Eseguo l'update
+        // UPDATE admin SET email=?, hashedPassword=? WHERE id=?
         updateAdmin.setString(1, admin.getEmail());
         updateAdmin.setString(2, admin.getHashedPassword());
+        updateAdmin.setInt(3, admin.getID());
         updateAdmin.executeUpdate();
 
-      } else { // INSERT
+      } else {
+        // INSERT INTO admin (email, hashedPassword) VALUES (?, ?)
         insertAdmin.setString(1, admin.getEmail());
         insertAdmin.setString(2, admin.getHashedPassword());
         if (insertAdmin.executeUpdate() == 1) {
@@ -142,6 +146,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
   @Override
   public Admin getAdminByID (int id) throws DataException {
 
+    // SELECT * FROM admin WHERE id=?
     try {
       selectAdminByID.setInt(1, id);
       try (ResultSet rs = selectAdminByID.executeQuery()) {
@@ -159,6 +164,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
   public List<Admin> getAdmins () throws DataException {
     List<Admin> admins = new ArrayList<>();
 
+    // SELECT id FROM admin
     try (ResultSet rs = getIDs.executeQuery()) {
       while (rs.next()) {
         admins.add(getAdminByID(rs.getInt("id")));
@@ -172,6 +178,7 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
   @Override
   public void deleteAdmin (int id) throws DataException {
 
+    // DELETE FROM admin WHERE id=?
     try {
       deleteAdminByID.setInt(1, id);
       deleteAdminByID.executeUpdate();
