@@ -16,9 +16,7 @@ public class Supervisor {
   private List<Survey> surveys;
 
   // Costruttori
-  public Supervisor () {
-  }
-
+  public Supervisor () {}
   public Supervisor (int id, String firstName, String lastName, String email, String hashedPassword, List<Survey> surveys) {
     this.id = id;
     this.firstName = firstName;

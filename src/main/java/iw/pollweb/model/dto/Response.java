@@ -13,9 +13,7 @@ public class Response {
   private Submission submission;
 
   // Costruttori
-  public Response () {
-  }
-
+  public Response () {}
   public Response (int id, String value, Question question, Participant participant, Submission submission) {
     this.id = id;
     this.value = value;

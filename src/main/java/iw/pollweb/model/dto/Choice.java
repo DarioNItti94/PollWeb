@@ -12,9 +12,7 @@ public class Choice {
   private Question question;
 
   // Costruttori
-  public Choice () {
-  }
-
+  public Choice () {}
   public Choice (int id, String value, int number, Question question) {
     this.id = id;
     this.value = value;

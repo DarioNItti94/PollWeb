@@ -16,9 +16,7 @@ public class Submission {
   private List<Response> responses;
 
   // Costruttori
-  public Submission () {
-  }
-
+  public Submission () {}
   public Submission (int id, Timestamp timestamp, Survey survey, Participant participant, List<Response> responses) {
     this.id = id;
     this.timestamp = timestamp;
