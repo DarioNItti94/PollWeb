@@ -45,4 +45,24 @@
                     <#include content_tpl>
                 </div>
     </body>
+    <script>
+function checkIfClosedQuestion() {
+        if (document.getElementById('exampleRadios5').checked ||
+            document.getElementById('exampleRadios6').checked
+            ) {
+            document.getElementById('choice1').style.display = "block";
+            document.getElementById('choice2').style.display = "block";
+            document.getElementById('choice3').style.display = "block";
+        } else if (
+            document.getElementById('exampleRadios1').checked ||
+            document.getElementById('exampleRadios2').checked ||
+            document.getElementById('exampleRadios3').checked ||
+            document.getElementById('exampleRadios4').checked
+            ) {
+            document.getElementById('choice1').style.display = "none";
+            document.getElementById('choice2').style.display = "none";
+            document.getElementById('choice3').style.display = "none";
+        }
+    }
+</script>
 </html>

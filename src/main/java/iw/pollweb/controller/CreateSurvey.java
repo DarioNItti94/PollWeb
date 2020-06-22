@@ -17,11 +17,13 @@ import iw.pollweb.model.PollWebDataLayer;
 import iw.pollweb.model.dto.Choice;
 import iw.pollweb.model.dto.Participant;
 import iw.pollweb.model.dto.Question;
+import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import javax.servlet.ServletException;
@@ -88,9 +90,9 @@ public class CreateSurvey extends BaseController {
         Survey survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().getSurveyByID(surveyID);
         Question question;
         question = ((PollWebDataLayer) request.getAttribute("datalayer")).getQuestionDAO().createQuestion();
-        String type = "";
-        String typeFront = request.getParameter("type");
-        switch(typeFront){
+
+        String type = request.getParameter("type");
+        switch (type) {
             case "Lunga":
                 type = "long";
                 break;
@@ -103,65 +105,47 @@ public class CreateSurvey extends BaseController {
             case "Numero":
                 type = "number";
                 break;
-            case "Aperta con scelta singola":
+            case "Risposta chiusa con scelta singola":
                 type = "single";
                 break;
-            case "Aperta con scelta multipla":
+            case "Risposta chiusa con scelta multipla":
                 type = "multiple";
                 break;
         }
         String text = request.getParameter("text");
         String note = request.getParameter("note");
-
-        boolean mandatory = request.getParameter("isMandatory")!= null;
+        boolean mandatory = request.getParameter("isMandatory") != null;
 //        boolean private = request.getParameter("isPrivate")!= null;
         int number = Integer.parseInt(request.getParameter("number"));
-        if (type != null && text != null) {
+        if (type != null) {
             question.setType(type);
+            question.setNote(note); 
             question.setText(text);
-            question.setNote(note);
-
             question.setMandatory(mandatory);
             question.setNumber(number);
             question.setSurvey(survey);
-            if (type == "multiple" || type == "single") {
-                Choice choice1;
-                Choice choice2;
-                Choice choice3;
-                choice1 = ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().createChoice();
-                choice2 = ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().createChoice();
-                choice3 = ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().createChoice();
-                
-                String choiceValue1 = request.getParameter("value1");
-                String choiceValue2 = request.getParameter("value2");
-                String choiceValue3 = request.getParameter("value3");
-                
-                int ChoiceNumber1 = 1;
-                int ChoiceNumber2 = 2;
-                int ChoiceNumber3 = 3;
-                if( choice1 != null && choice2 != null && choice3 != null){
-                choice1.setValue(choiceValue1);
-                choice1.setNumber(ChoiceNumber1);
-                choice2.setValue(choiceValue2);
-                choice2.setNumber(ChoiceNumber2);
+            if (type.equals("multiple") || type.equals("single")) {
+                Choice choice;
 
-                choice3.setValue(choiceValue3);
-                choice3.setNumber(ChoiceNumber3);
+                choice = ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().createChoice();
 
-                List<Choice> choicesList = new ArrayList<Choice>();
-                choicesList.add(choice1);
-                choicesList.add(choice2);
-                choicesList.add(choice3);
-                
-                choice1.setQuestion(question);
-                choice2.setQuestion(question);
-                choice3.setQuestion(question);
-             
-                ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().storeChoice(choice1);
-                ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().storeChoice(choice2);
-                ((PollWebDataLayer) request.getAttribute("datalayer")).getChoiceDAO().storeChoice(choice3);
+                String[] choiceValue = request.getParameterValues("value");
+
+                //int[] numberchoice = Integer.parseInt(request.getParameterValues("number"));
+                //if( choice != null  ){
+                List<Choice> choicesList = new ArrayList(Arrays.asList(choiceValue));
+
+//            while (i<=sup) {
+////                for(String email: emailSupervisors){
+////                    Supervisor supervisor = new Supervisor();
+////                    supervisor.setEmail(email);
+////                    supervisorsList.add(supervisor);
+////                    i++;
+////                }
+//            }
                 question.setChoices(choicesList);
-                }
+                //}   question.setText(text);
+
             }
             response.sendRedirect("/PollWeb/CreateSurvey?id=" + survey.getID());
 
