@@ -131,6 +131,12 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
     }
   }
 
+  public void storeChoices (List<Choice> choices) throws DataException {
+    for (Choice choice : choices) {
+      storeChoice(choice);
+    }
+  }
+
   @Override
   public Choice getChoiceByID (int id) throws DataException {
 
