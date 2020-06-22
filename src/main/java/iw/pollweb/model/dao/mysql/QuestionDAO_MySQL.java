@@ -140,6 +140,12 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
     }
   }
 
+  public void storeQuestions (List<Question> questions) throws DataException {
+    for (Question question : questions) {
+      storeQuestion(question);
+    }
+  }
+
   @Override
   public Question getQuestionByID (int id) throws DataException {
 
