@@ -71,21 +71,19 @@ public class SupervisorDAO_MySQL extends DataAccessObject implements SupervisorD
 
   @Override
   public SupervisorProxy createSupervisorFromRS (ResultSet rs) throws DataException {
+    SupervisorProxy supervisor = createSupervisor();
 
     try {
-      SupervisorProxy supervisor = createSupervisor();
-
       supervisor.setID(rs.getInt("id"));
       supervisor.setFirstName(rs.getString("firstName"));
       supervisor.setLastName(rs.getString("lastName"));
       supervisor.setEmail(rs.getString("email"));
       supervisor.setHashedPassword(rs.getString("hashedPassword"));
 
-      return supervisor;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Supervisor", e);
     }
+    return supervisor;
   }
 
   @Override

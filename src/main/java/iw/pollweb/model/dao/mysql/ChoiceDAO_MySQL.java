@@ -67,20 +67,18 @@ public class ChoiceDAO_MySQL extends DataAccessObject implements ChoiceDAO {
 
   @Override
   public ChoiceProxy createChoiceFromRS (ResultSet rs) throws DataException {
+    ChoiceProxy choice = createChoice();
 
     try {
-      ChoiceProxy choice = createChoice();
-
       choice.setID(rs.getInt("id"));
       choice.setValue(rs.getString("value"));
       choice.setNumber(rs.getInt("number"));
       choice.setQuestionID(rs.getInt("questionID"));
 
-      return choice;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Choice", e);
     }
+    return choice;
   }
 
   @Override

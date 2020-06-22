@@ -68,20 +68,18 @@ public class AdminDAO_MySQL extends DataAccessObject implements AdminDAO {
   }
 
   @Override
-  public Admin createAdminFromRS (ResultSet rs) throws DataException {
+  public AdminProxy createAdminFromRS (ResultSet rs) throws DataException {
+    AdminProxy admin = createAdmin();
 
     try {
-      AdminProxy admin = createAdmin();
-
       admin.setID(rs.getInt("id"));
       admin.setEmail(rs.getString("email"));
       admin.setHashedPassword(rs.getString("hashedPassword"));
 
-      return admin;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Admin", e);
     }
+    return admin;
   }
 
   @Override

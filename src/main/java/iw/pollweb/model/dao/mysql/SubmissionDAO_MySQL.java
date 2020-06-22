@@ -70,20 +70,18 @@ public class SubmissionDAO_MySQL extends DataAccessObject implements SubmissionD
 
   @Override
   public SubmissionProxy createSubmissionFromRS (ResultSet rs) throws DataException {
+    SubmissionProxy submission = createSubmission();
 
     try {
-      SubmissionProxy submission = createSubmission();
-
       submission.setID(rs.getInt("id"));
       submission.setTimestamp(rs.getTimestamp("timestamp"));
       submission.setSurveyID(rs.getInt("surveyID"));
       submission.setParticipantID(rs.getInt("participantID"));
 
-      return submission;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Submission", e);
     }
+    return submission;
   }
 
   @Override

@@ -75,22 +75,20 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
   }
 
   @Override
-  public Response createResponseFromRS (ResultSet rs) throws DataException {
+  public ResponseProxy createResponseFromRS (ResultSet rs) throws DataException {
+    ResponseProxy response = createResponse();
 
     try {
-      ResponseProxy response = createResponse();
-
       response.setID(rs.getInt("id"));
       response.setValue(rs.getString("value"));
       response.setQuestionID(rs.getInt("questionID"));
       response.setParticipantID(rs.getInt("participantID"));
       response.setSubmissionID(rs.getInt("submissionID"));
 
-      return response;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Response", e);
     }
+    return response;
   }
 
   @Override

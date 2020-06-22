@@ -74,11 +74,10 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
   }
 
   @Override
-  public Survey createSurveyFromRS (ResultSet rs) throws DataException {
+  public SurveyProxy createSurveyFromRS (ResultSet rs) throws DataException {
+    SurveyProxy survey = createSurvey();
 
     try {
-      SurveyProxy survey = createSurvey();
-
       survey.setID(rs.getInt("id"));
       survey.setTitle(rs.getString("title"));
       survey.setOpeningText(rs.getString("openingText"));
@@ -88,11 +87,10 @@ public class SurveyDAO_MySQL extends DataAccessObject implements SurveyDAO {
       survey.setClosed(rs.getBoolean("isClosed"));
       survey.setSupervisorID(rs.getInt("supervisorID"));
 
-      return survey;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Survey", e);
     }
+    return survey;
   }
 
   @Override

@@ -69,10 +69,9 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
 
   @Override
   public ParticipantProxy createParticipantFromRS (ResultSet rs) throws DataException {
+    ParticipantProxy participant = createParticipant();
 
     try {
-      ParticipantProxy participant = createParticipant();
-
       participant.setID(rs.getInt("id"));
       participant.setFirstName(rs.getString("firstName"));
       participant.setLastName(rs.getString("lastName"));
@@ -81,11 +80,10 @@ public class ParticipantDAO_MySQL extends DataAccessObject implements Participan
       participant.setDisabled(rs.getBoolean("isDisabled"));
       participant.setSurveyID(rs.getInt("surveyID"));
 
-      return participant;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Participant", e);
     }
+    return participant;
   }
 
   @Override

@@ -67,10 +67,9 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
 
   @Override
   public QuestionProxy createQuestionFromRS (ResultSet rs) throws DataException {
+    QuestionProxy question = createQuestion();
 
     try {
-      QuestionProxy question = createQuestion();
-
       question.setID(rs.getInt("id"));
       question.setType(rs.getString("type"));
       question.setText(rs.getString("text"));
@@ -79,11 +78,10 @@ public class QuestionDAO_MySQL extends DataAccessObject implements QuestionDAO {
       question.setNumber(rs.getInt("number"));
       question.setSurveyID(rs.getInt("surveyID"));
 
-      return question;
-
     } catch (SQLException e) {
       throw new DataException("Errore creazione Question", e);
     }
+    return question;
   }
 
   @Override
