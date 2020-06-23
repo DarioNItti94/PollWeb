@@ -1,75 +1,32 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/sondaggio.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <title>PollWeb</title>
-</head>
+<div class="row d-flex w-100">
+    <h2 style="margin-top: 18px" class="col-md-7">${survey.title}</h2>
+</div>
+<p style="margin-bottom: 18px">${survey.openingText}</p>
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand navbar-light bg-light">
+        <form class="" action="/PollWeb/survey" name="testanswer" method="post">
+    <input name="pollID" value="${survey.ID}" hidden>
 
-            <span class="navbar-brand col-md-1">PollWeb</span>
+<#if (questions?size>0)>
+<#list questions as question>
+<#switch question.type>
+<#case "short">
+<#include "switch/short.ftl.html">
+<#break>
+<#case "long">
+<#include "switch/long.ftl.html">
+<#break>
+<#case "date">
+<#include "switch/date.ftl.html">
+<#break>
+<#case "number">
+<#include "switch/number.ftl.html">
+<#break>
+<#default>
+<#include "switch/short.ftl.html">
+</#switch>
+</#list>
 
-            <ul class="navbar-nav col-md-3"></ul>
-
-            <ul class="navbar-nav col-md-1 offset-md-7">
-                <li class="nav-item">
-                    <a class="nav-link" href="home_user_anonimo.html">Logout</a>
-                </li>
-            </ul>
-        </nav>
-
-    </header>
-    <div class="container">
-        <div class="card bd-sondaggio">
-            <div class="card-body">
-                <h5 class="card-title">${survey.title}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">${survey.openingText}</h6>
-                <form action="/Pollweb/survey" method="get">
-                    <#list survey.questions as question>
-                    <input type="hidden" name="survey" value="#{survey.id}" name="${question.text}">
-                    <!--#list survey.questions as question-->
-                    <!--#if question.note??><p>${question.note}</p></#if-->
-                    <div class="form-group">
-                        <label for="FormControlInput1">Esempio domanda testo corto</label>
-                        <!--#if question.type == "ShortTextQuestion"-->
-                        <input <#if question.isMandatory>required="required"</#if> name="text" type="text" class="form-control" id="FormControlInput1" name="${question.text}">
-                    </div>
-                    <div class="form-group">
-                        <label for="FormControlSelect1">Esempio domanda select</label>
-                        <!--#elseif question.type == "SelectQuestion"-->
-                        <select <#if question.isMandatory>required="required"</#if> name="text" class="form-control" id="FormControlSelect1" name="${question.text}">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="FormControlTextarea1">Esempio domanda testo lungo</label>
-                        <!--#elseif question.class.simpleName == "LongTextQuestion"-->
-                        <textarea <#if question.isMandatory>required="required"</#if> class="form-control" id="FormControlTextarea1" rows="3" name="${question.text}"></textarea>
-                    </div>
-                    <!--/#list-->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Invia</button>
-                    </div>
-                    </#list>
-                </form>
-                <h6 class="card-subtitle mb-2 text-muted">${survey.closingText}</h6>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
+<input type="submit" value="Invia" name="write" class="btn btn-primary">
+</form>
+</#if>

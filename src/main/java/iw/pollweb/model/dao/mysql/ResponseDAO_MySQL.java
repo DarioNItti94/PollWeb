@@ -159,6 +159,9 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
     }
   }
 
+  
+  
+  
   @Override
   public Response getResponseByID (int id) throws DataException {
 
@@ -194,6 +197,15 @@ public class ResponseDAO_MySQL extends DataAccessObject implements ResponseDAO {
     return responses;
   }
 
+  
+  public void storeResponses (List<Response> responses) throws DataException {
+    for (Response response : responses) {
+      storeResponse(response);
+    }
+  }
+
+  
+  
   @Override
   public List<Response> getResponsesBySubmission (Submission submission) throws DataException {
     List<Response> responses = new ArrayList<>();

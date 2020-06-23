@@ -15,6 +15,7 @@ import iw.framework.utils.PasswordUtility;
 import iw.pollweb.model.PollWebDataLayer;
 import iw.pollweb.model.dto.Admin;
 import iw.pollweb.model.dto.Participant;
+import iw.pollweb.model.dto.Submission;
 import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
@@ -70,9 +71,10 @@ public class Autentication extends BaseController {
                     participant = ((PollWebDataLayer) request.getAttribute("datalayer")).getParticipantDAO().getParticipantByID(participantID);
                     SecurityLayer.createSession(request, participant.getEmail(), participant.getID());
                     Survey survey = participant.getSurvey();
+                    Submission submission = new Submission();
                     if (survey != null && !participant.isDisabled()) {
                         response.sendRedirect("/PollWeb/survey?id=" + survey.getID());
-                    } else {
+                    } else if (survey.isClosed() || submission.getSurvey().equals(survey)) {
                         throw new ServletException("non ci sono nuovi sondaggi");
                     }
                 } else {

@@ -1,28 +1,114 @@
 
-        <h3 class="card-title" style="margin-top:20px">${survey.title}
-            <button type="button" class="btn btn-secondary">Download</button>
-            <button type="button" class="btn btn-secondary">Modifica</button>
-            <form style="display: inline-block;" action="/PollWeb/actionsurvey" method="post">
-                    <input type="hidden" name="pollID" value="${survey.ID}"/>
-                    <input type="submit" class="small-btn" name="close" value="Chiudi" />
-                </form>
-            <button type="button" class="btn btn-secondary">Disattiva</button>
-            <button type="button" class="btn btn-secondary">Chiudi</button>
-            <form style="display: inline-block;" action="/PollWeb/actionsurvey" method="post">
-                    <input type="hidden" name="pollID" value="${survey.ID}"/>
-                    <input type="submit" class="small-btn" name="delete" value="Elimina" />
-                </form>
-        </h5>
-        
-        <#if (questions?size>0)>
-        <div class="list-group sortable">
-            <#list questions as question>
-                <a href="/PollWeb/question?id=${question.ID}" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="row d-flex w-100">
-                        <h5 class="col-md-7">1) ${question.title}</h5>
-                    </div>
-                    <p class="mb-1">${question.text}</p>
-                </a>
-            </#list>
-            </div>
-        </#if>
+<h3 class="card-title" style="margin-top:20px">${survey.title}
+</h3>
+<form style="display: inline-block;" action="/PollWeb/actionsurvey" method="post">
+    <input type="hidden" name="pollID" value="${survey.ID}">
+    <input type="submit" class="btn btn-secondary" name="" value="Modifica">
+</form>
+<form style="display: inline-block;" action="/PollWeb/actionsurvey" method="post">
+    <input type="hidden" name="pollID" value="${survey.ID}">
+    <input type="submit" class="btn btn-secondary" name="deactivate" value="Chiudi">
+</form>
+<form style="display: inline-block;" action="/PollWeb/actionsurvey" method="post">
+    <input type="hidden" name="pollID" value="${survey.ID}">
+    <input type="submit" class="btn btn-secondary" name="close" value="Disattiva">
+</form>
+<form style="display: inline-block;" action="/PollWeb/actionsurvey" method="post">
+    <input type="hidden" name="pollID" value="${survey.ID}">
+    <input type="submit" class="btn btn-secondary" name="delete" value="Elimina">
+</form>
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<h5 style="margin-top:10px" class="card-title">Crea partecipante</h5>
+<form action="/PollWeb/actionsurvey" method="post">
+    <input name="pollID" value="${survey.ID}" hidden>
+
+    <div class="form-group">
+        <label for="FormControlInput1">Nome Partecipante</label>
+        <input name="firstName" type="text" class="form-control classePart" id="FormControlInput1" required>
+    </div>
+
+    <div class="form-group">
+        <label for="FormControlPart">Cogome Partecipante</label>
+        <input name="lastName" type="text" class="form-control classePart" id="FormControlPart">
+    </div>
+
+    <div class="form-group">
+        <label for="FormControlInputSup">E-mail Partecipante</label>
+        <input name="email" type="text" class="form-control classePart" id="FormControlSup">
+    </div>
+
+
+    <input type="submit" value="Invita" name="addpart" class="btn btn-primary" onclick="document.getElementsByClassName('classePart').value = ''">
+
+</form>
+
+<h5 style="margin-top: 54px;" class="card-title">Crea domanda</h5>
+<form action="/PollWeb/actionsurvey" method="post">
+    <input name="pollID" value="${survey.ID}" hidden>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="long" onClick="checkIfClosedQuestion()">
+        <label class="form-check-label" for="exampleRadios1">
+            Lunga
+        </label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="short" onClick="checkIfClosedQuestion()">
+        <label class="form-check-label" for="exampleRadios2">
+            Corta
+        </label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios3" value="number" onClick="checkIfClosedQuestion()">
+        <label class="form-check-label" for="exampleRadios3">
+            Numero
+        </label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios4" value="date" onClick="checkIfClosedQuestion()">
+        <label class="form-check-label" for="exampleRadios4">
+            Data
+        </label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios5" value="single" onClick="checkIfClosedQuestion()">
+        <label class="form-check-label" for="exampleRadios5">
+            Risposta chiusa con scelta singola
+        </label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="type" id="exampleRadios6" value="multiple" onClick="checkIfClosedQuestion()">
+        <label class="form-check-label" for="exampleRadios6">
+            Risposta chiusa con scelta multipla
+        </label>
+    </div>
+    <div class="form-group">
+        <input style="margin-top: 13px;" name="text" type="text" placeholder="Testo domanda" class="form-control">
+    </div>
+    <div class="form-group">
+        <input name="note" placeholder="Note Domanda" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <input name="number" placeholder="Numero domanda" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <input style="display:none; width: 345px;" name="value" type="text" placeholder="Scelta" class="form-control" id="choice1">
+    </div>
+    <div class="form-group">
+        <input style="display:none; width: 345px;" name="value" placeholder="Scelta" type="text" class="form-control" id="choice2">
+    </div>
+    <div class="form-group">
+        <input style="display:none; width: 345px;" name="value" placeholder="Scelta" type="text" class="form-control" id="choice3">
+    </div>
+    <div class="form-check">
+        <input name="isMandatory" type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label style="margin-bottom: 12px" class="form-check-label" for="exampleCheck1">Obbligatoria</label>
+    </div>
+    <input type="submit" value="Crea" name="question" class="btn btn-primary">
+</form>

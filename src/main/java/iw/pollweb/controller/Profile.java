@@ -23,6 +23,7 @@ import iw.pollweb.model.dto.Supervisor;
 import iw.pollweb.model.dto.Survey;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -62,51 +63,27 @@ public class Profile extends BaseController {
     private void action_create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DataException {
         Survey survey;
         survey = ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().createSurvey();
-
+        Supervisor supervisor;
+        supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().createSupervisor();
         String title = request.getParameter("title");
         String open_txt = request.getParameter("opening_text");
         String close_txt = request.getParameter("closing_text");
-        boolean isclosed = Boolean.parseBoolean(request.getParameter("isclosed"));
-        boolean isreserved = Boolean.parseBoolean(request.getParameter("isreserved"));
-        boolean isactive = Boolean.parseBoolean(request.getParameter("isactive"));
-        int numberQuest = Integer.parseInt(request.getParameter("questions"));
-        int numberPart = Integer.parseInt(request.getParameter("participants"));
-        List<Question> questionsList = new ArrayList<Question>();
-        int i = 0;
-        while (i <= numberQuest) {
-            Question question = new Question();
-            questionsList.add(question);
-            i++;
-        }
-        List<Participant> participantsList = new ArrayList<Participant>();
-        int j = 0;
-        while (j <= numberPart) {
-            Participant participant = new Participant();
-            participantsList.add(participant);
-            j++;
-        }
-        int idsup = 2;
-        if (title != null && open_txt != null && close_txt != null) {
-            List<Supervisor> supervisors = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisors();
-            request.setAttribute("supervisor", supervisors);
-            //List< Supervisor> supervisors = ((PollWebDataLayer)request.getAttribute("datalayer")).getSupervisorDAO().getSupervisors().get(idsup);
+        boolean isPrivate = request.getParameter("isPrivate") != null;
+
+        String email = request.getParameter("email");
+        supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByEmail(email);
+        if (title != null) {
             survey.setTitle(title);
             survey.setOpeningText(open_txt);
             survey.setClosingText(close_txt);
-            survey.setActive(isactive);
-            survey.setClosed(isclosed);
-            survey.setReserved(isreserved);
-            survey.setQuestions(questionsList);
-            survey.setParticipants(participantsList);
-           
-            Supervisor supervisor = ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().getSupervisorByID(idsup);
             survey.setSupervisor(supervisor);
+            
+            response.sendRedirect("/PollWeb/profile");
             ((PollWebDataLayer) request.getAttribute("datalayer")).getSurveyDAO().storeSurvey(survey);
-            response.sendRedirect("/PollWeb/CreateSurvey?id=" + survey.getID());
-        } else {
-            throw new ServletException("inserisci i parametri");
-        }
+      }
     }
+
+    
 
     private void action_create_sup(HttpServletRequest request, HttpServletResponse response) throws ServletException, DataException, IOException {
         Supervisor supervisor;
@@ -122,13 +99,14 @@ public class Profile extends BaseController {
             supervisor.setHashedPassword(PasswordUtility.getSHA256(password));
             String mittente = "pollweb2020@gmail.com";
             String pass = "We_PollWeb_2020";
-            String obj = "sei Diventato supervisore";
+            String obj = "Sei diventato supervisore";
             String url = "http://localhost:8080/PollWeb/login";
             String testo = "Ciao " + FName + " " + LName + "\n"
                     + "Sei stato invitato ad essere un supervisore della nostra piattaforma le tue credenziali sono: \n\n" + "Email:  " + email + "\n" + "password:  " + password + "\n" + "clicca qui per accedere al sondaggio: " + url;
             EmailSender.send(mittente, pass, email, obj, testo);
-            ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().storeSupervisor(supervisor);
             response.sendRedirect("/PollWeb/profile");
+
+            ((PollWebDataLayer) request.getAttribute("datalayer")).getSupervisorDAO().storeSupervisor(supervisor);
         } else {
             throw new ServletException("inserisci i parametri");
         }

@@ -20,7 +20,6 @@ iw\framework\result\HTMLResult.class
 iw\framework\result\SplitSlashesFmkExt.class
 iw\framework\result\DataModelFiller.class
 iw\pollweb\model\dao\SubmissionDAO.class
-iw\pollweb\controller\CreateSurvey.class
 iw\pollweb\model\PollWebDataLayer.class
 iw\pollweb\model\dto\Choice.class
 iw\pollweb\model\dao\AdminDAO.class

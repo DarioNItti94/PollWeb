@@ -22,6 +22,9 @@ public interface ResponseDAO {
 
   // CRUD
   void storeResponse (Response response) throws DataException;
+    public void storeResponses (List<Response> responses) throws DataException;
+
+  
   Response getResponseByID (int id) throws DataException;
   List<Response> getResponsesByParticipant (Participant participant) throws DataException;
   List<Response> getResponsesBySubmission (Submission submission) throws DataException;

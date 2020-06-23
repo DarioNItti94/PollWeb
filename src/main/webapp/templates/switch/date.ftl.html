@@ -1,0 +1,13 @@
+<div class="list-group sortable">
+    <div class="row d-flex w-100">
+        <input name="questionID${question.number}" value="${question.ID}" hidden/>
+        <h5 class="col-md-7">${question.text} <#if question.mandatory> (*)</#if></h5>
+        <p>
+            <b class="mr-2">Note: </b>
+            ${question.note}
+        </p>
+    </div>
+    <div class="form-group">
+         <input id="datepicker" pattern="\d{1,2}/\d{1,2}/\d{4}" class="form-control" placeholder="Inserisci una data nel seguente formato dd/mm/yyyy" name="response${question.number}"/>
+    </div>
+</div>
